@@ -1,0 +1,21 @@
+html { scroll-behavior: smooth; }
+
+::selection { background: #ff9933; color: #0b1437; }
+
+/* Soft scrollbars for the ward list */
+#wardList::-webkit-scrollbar { width: 6px; }
+#wardList::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; }
+#wardList::-webkit-scrollbar-track { background: transparent; }
+
+/* Fade-up on view */
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.in { opacity: 1; transform: none; }
+
+/* Tricolor underline accent for headings */
+.tri-accent { position: relative; }
+.tri-accent::after {
+  content: ""; position: absolute; left: 0; bottom: -10px;
+  width: 64px; height: 4px; border-radius: 4px;
+  background: linear-gradient(90deg, #ff9933 0 33%, #ffffff 33% 66%, #138808 66% 100%);
+  box-shadow: 0 0 0 1px rgba(13,42,107,.1);
+}
