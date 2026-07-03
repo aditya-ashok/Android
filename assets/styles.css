@@ -1,21 +1,38 @@
+:root {
+  --saffron: #ff7a18;
+  --gold: #c8912f;
+  --green: #0f8a5f;
+  --ink: #1a1206;
+  --cream: #fbf7ef;
+}
 html { scroll-behavior: smooth; }
+body { font-feature-settings: "liga" 1, "calt" 1; }
 
-::selection { background: #ff9933; color: #0b1437; }
+.font-display { font-family: "Fraunces", Georgia, serif; }
+.font-hindi { font-family: "Tiro Devanagari Hindi", serif; }
 
-/* Soft scrollbars for the ward list */
-#wardList::-webkit-scrollbar { width: 6px; }
-#wardList::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; }
-#wardList::-webkit-scrollbar-track { background: transparent; }
+::selection { background: var(--saffron); color: #fff; }
 
-/* Fade-up on view */
+.hero-overlay {
+  background: linear-gradient(180deg, rgba(26,18,6,0.30) 0%, rgba(26,18,6,0.74) 100%);
+}
+.text-gradient {
+  background: linear-gradient(90deg, #ff7a18, #c8912f);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.card-hover { transition: transform .3s ease, box-shadow .3s ease; }
+.card-hover:hover { transform: translateY(-6px); box-shadow: 0 24px 48px -20px rgba(26,18,6,.35); }
+
+.kpi-tick { animation: fadeUp .6s ease both; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
 .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
 .reveal.in { opacity: 1; transform: none; }
 
-/* Tricolor underline accent for headings */
-.tri-accent { position: relative; }
-.tri-accent::after {
-  content: ""; position: absolute; left: 0; bottom: -10px;
-  width: 64px; height: 4px; border-radius: 4px;
-  background: linear-gradient(90deg, #ff9933 0 33%, #ffffff 33% 66%, #138808 66% 100%);
-  box-shadow: 0 0 0 1px rgba(13,42,107,.1);
-}
+.thin-scroll::-webkit-scrollbar { height: 8px; width: 8px; }
+.thin-scroll::-webkit-scrollbar-thumb { background: #d8ccb4; border-radius: 8px; }
+.thin-scroll::-webkit-scrollbar-track { background: transparent; }
+
+.badge-dot { width: .5rem; height: .5rem; border-radius: 9999px; display: inline-block; }

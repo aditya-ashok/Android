@@ -3,12 +3,11 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Jhanjharpur Vidhan Sabha — Official Constituency Portal</title>
-<meta name="description" content="Official portal of Jhanjharpur Vidhan Sabha constituency, Madhubani, Bihar — development dashboard, schemes, grievances, news and contact." />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23ff9933'/%3E%3Crect y='22' width='64' height='20' fill='%23ffffff'/%3E%3Crect y='42' width='64' height='22' fill='%23138808'/%3E%3Ccircle cx='32' cy='32' r='6' fill='none' stroke='%23000080' stroke-width='2'/%3E%3C/svg%3E" />
+<title>Namaste Bharat Inn — Hotel & Banquets · Book Direct</title>
+<meta name="description" content="Namaste Bharat Inn — 12 boutique rooms and 2 grand banquet halls. Book direct for the best rate, or find us on MakeMyTrip, Yatra, Goibibo and Booking.com." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23ff7a18'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='white' font-family='serif'%3E%E0%A4%A8%3C/text%3E%3C/svg%3E" />
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/styles.css" />
 <script>
   tailwind.config = {
@@ -16,703 +15,252 @@
       extend: {
         fontFamily: {
           sans: ['"Plus Jakarta Sans"', 'ui-sans-serif', 'system-ui'],
+          display: ['"Fraunces"', 'Georgia', 'serif'],
           hindi: ['"Tiro Devanagari Hindi"', 'serif'],
         },
         colors: {
-          saffron: '#ff9933',
-          india: '#138808',
-          ink: '#0b1437',
-          navy: '#0d2a6b',
-          gold: '#d4a017',
+          saffron: '#ff7a18',
+          gold: '#c8912f',
+          leaf: '#0f8a5f',
+          ink: '#1a1206',
+          cream: '#fbf7ef',
         },
-        boxShadow: {
-          soft: '0 10px 30px -12px rgba(13,42,107,0.25)',
-        }
+        boxShadow: { soft: '0 12px 34px -14px rgba(26,18,6,0.28)' },
       }
     }
   }
 </script>
 </head>
-<body class="font-sans bg-slate-50 text-ink antialiased">
+<body class="font-sans bg-cream text-ink antialiased">
 
-<!-- Top utility bar -->
-<div class="bg-ink text-white text-xs">
+<!-- Top bar -->
+<div class="bg-ink text-cream/90 text-xs">
   <div class="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-2">
     <div class="flex items-center gap-4">
-      <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span> Government of Bihar</span>
-      <span class="hidden sm:inline opacity-70">Madhubani District · Constituency No. 33</span>
+      <span class="inline-flex items-center gap-1.5"><span class="badge-dot bg-green-400 animate-pulse"></span> Now accepting bookings</span>
+      <span class="hidden sm:inline opacity-70">12 Rooms · 2 Banquet Halls</span>
     </div>
     <div class="flex items-center gap-4">
-      <a href="#contact" class="hover:text-saffron">📞 1800-345-6789</a>
-      <a href="#grievance" class="hover:text-saffron">Helpdesk</a>
-      <span class="hidden md:inline" id="liveClock">—</span>
-      <div class="flex items-center gap-1">
-        <button class="px-2 py-0.5 rounded bg-white/10 hover:bg-white/20" onclick="setLang('en')">EN</button>
-        <button class="px-2 py-0.5 rounded bg-white/10 hover:bg-white/20 font-hindi" onclick="setLang('hi')">हिं</button>
-      </div>
+      <a href="tel:+919000000000" class="hover:text-saffron">📞 +91 90000 00000</a>
+      <a href="mailto:stay@namastebharatinn.com" class="hover:text-saffron hidden sm:inline">stay@namastebharatinn.com</a>
+      <a href="admin.html" class="px-2 py-0.5 rounded bg-white/10 hover:bg-white/20">Admin / Revenue</a>
     </div>
   </div>
 </div>
 
-<!-- Header / Nav -->
-<header class="sticky top-0 z-40 backdrop-blur bg-white/85 border-b border-slate-200">
+<!-- Header -->
+<header class="sticky top-0 z-40 backdrop-blur bg-cream/85 border-b border-black/5">
   <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
-    <a href="#" class="flex items-center gap-3">
-      <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-saffron via-white to-india flex items-center justify-center shadow-soft ring-1 ring-slate-200">
-        <svg viewBox="0 0 24 24" class="w-7 h-7 text-navy" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg>
-      </div>
-      <div class="leading-tight">
-        <div class="font-extrabold text-lg tracking-tight">Jhanjharpur Vidhan Sabha</div>
-        <div class="text-[11px] uppercase tracking-widest text-slate-500">Official Constituency Portal · Bihar</div>
-      </div>
+    <a href="#top" class="flex items-center gap-3">
+      <span class="w-11 h-11 rounded-xl bg-saffron text-white grid place-items-center font-hindi text-2xl shadow-soft">न</span>
+      <span class="leading-tight">
+        <span class="block font-display text-xl font-700">Namaste Bharat Inn</span>
+        <span class="block text-[11px] uppercase tracking-[0.2em] text-gold">Hotel &amp; Banquets</span>
+      </span>
     </a>
-    <nav class="hidden lg:flex items-center gap-1 text-sm font-medium text-slate-700">
-      <a href="#home" class="px-3 py-2 rounded-lg hover:bg-slate-100">Home</a>
-      <a href="#dashboard" class="px-3 py-2 rounded-lg hover:bg-slate-100">Dashboard</a>
-      <a href="#development" class="px-3 py-2 rounded-lg hover:bg-slate-100">Development</a>
-      <a href="#schemes" class="px-3 py-2 rounded-lg hover:bg-slate-100">Schemes</a>
-      <a href="#grievance" class="px-3 py-2 rounded-lg hover:bg-slate-100">Grievance</a>
-      <a href="#news" class="px-3 py-2 rounded-lg hover:bg-slate-100">News</a>
-      <a href="#gallery" class="px-3 py-2 rounded-lg hover:bg-slate-100">Gallery</a>
-      <a href="#contact" class="px-3 py-2 rounded-lg hover:bg-slate-100">Contact</a>
+    <nav class="hidden md:flex items-center gap-7 text-sm font-500">
+      <a href="#rooms" class="hover:text-saffron">Rooms</a>
+      <a href="#banquets" class="hover:text-saffron">Banquets</a>
+      <a href="#amenities" class="hover:text-saffron">Amenities</a>
+      <a href="#partners" class="hover:text-saffron">Book On</a>
+      <a href="#contact" class="hover:text-saffron">Contact</a>
     </nav>
-    <div class="flex items-center gap-2">
-      <a href="#grievance" class="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-navy text-white text-sm font-semibold hover:bg-ink transition">File Grievance →</a>
-      <button class="lg:hidden p-2 rounded-lg hover:bg-slate-100" onclick="document.getElementById('mobileNav').classList.toggle('hidden')" aria-label="Menu">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-      </button>
-    </div>
-  </div>
-  <div id="mobileNav" class="hidden lg:hidden px-4 pb-4 grid grid-cols-2 gap-2 text-sm font-medium">
-    <a href="#dashboard" class="px-3 py-2 rounded-lg bg-slate-100">Dashboard</a>
-    <a href="#development" class="px-3 py-2 rounded-lg bg-slate-100">Development</a>
-    <a href="#schemes" class="px-3 py-2 rounded-lg bg-slate-100">Schemes</a>
-    <a href="#grievance" class="px-3 py-2 rounded-lg bg-slate-100">Grievance</a>
-    <a href="#news" class="px-3 py-2 rounded-lg bg-slate-100">News</a>
-    <a href="#contact" class="px-3 py-2 rounded-lg bg-slate-100">Contact</a>
+    <a href="#book" class="rounded-full bg-ink text-white text-sm font-600 px-5 py-2.5 hover:bg-saffron transition">Book Now</a>
   </div>
 </header>
 
 <!-- Hero -->
-<section id="home" class="relative overflow-hidden">
-  <div class="absolute inset-0 -z-10">
-    <div class="absolute inset-0 bg-gradient-to-br from-navy via-ink to-[#091230]"></div>
-    <div class="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_20%_20%,#ff9933_0,transparent_40%),radial-gradient(circle_at_80%_30%,#138808_0,transparent_40%)]"></div>
-    <svg class="absolute inset-0 w-full h-full opacity-[0.07]" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M0 40L40 0M-10 10L10 -10M30 50L50 30" stroke="white" stroke-width="0.5"/></pattern></defs><rect width="100%" height="100%" fill="url(#g)"/></svg>
-  </div>
-  <div class="max-w-7xl mx-auto px-4 py-20 lg:py-28 grid lg:grid-cols-12 gap-10 items-center text-white">
-    <div class="lg:col-span-7">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-xs uppercase tracking-widest">
-        <span class="w-1.5 h-1.5 rounded-full bg-saffron"></span> Constituency · Madhubani · Bihar
-      </div>
-      <h1 class="mt-5 text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.05]">
-        Building a stronger,<br/>
-        <span class="bg-gradient-to-r from-saffron via-yellow-200 to-india bg-clip-text text-transparent">Sashakt Jhanjharpur.</span>
-      </h1>
-      <p class="mt-5 text-lg text-slate-200 max-w-xl">
-        A transparent window into development projects, welfare schemes, public grievances and live updates from across the Jhanjharpur Vidhan Sabha constituency.
-      </p>
-      <div class="mt-8 flex flex-wrap gap-3">
-        <a href="#dashboard" class="px-5 py-3 rounded-xl bg-saffron text-ink font-semibold hover:brightness-110 shadow-soft">View Live Dashboard</a>
-        <a href="#grievance" class="px-5 py-3 rounded-xl bg-white/10 border border-white/30 hover:bg-white/20 font-semibold">Raise a Grievance</a>
-        <a href="#schemes" class="px-5 py-3 rounded-xl bg-white text-ink font-semibold hover:bg-slate-100">Explore Schemes</a>
-      </div>
-      <div class="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl">
-        <div class="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur"><div class="text-2xl font-bold" data-counter="312">0</div><div class="text-xs text-slate-300 mt-1">Villages covered</div></div>
-        <div class="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur"><div class="text-2xl font-bold" data-counter="27">0</div><div class="text-xs text-slate-300 mt-1">Gram Panchayats</div></div>
-        <div class="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur"><div class="text-2xl font-bold" data-counter="486">0</div><div class="text-xs text-slate-300 mt-1">Projects active</div></div>
-        <div class="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur"><div class="text-2xl font-bold"><span data-counter="92">0</span>%</div><div class="text-xs text-slate-300 mt-1">Grievance closure</div></div>
-      </div>
-    </div>
-    <div class="lg:col-span-5">
-      <div class="relative">
-        <div class="absolute -inset-4 bg-gradient-to-tr from-saffron/30 via-transparent to-india/30 blur-2xl rounded-3xl"></div>
-        <div class="relative rounded-3xl bg-white/10 backdrop-blur border border-white/20 p-6 shadow-2xl">
-          <div class="flex items-center justify-between">
-            <div class="text-xs uppercase tracking-widest text-slate-300">Today's Pulse</div>
-            <div class="flex items-center gap-1.5 text-xs"><span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span> LIVE</div>
-          </div>
-          <div class="mt-4 grid grid-cols-2 gap-3">
-            <div class="rounded-xl p-4 bg-gradient-to-br from-saffron/20 to-saffron/5 border border-saffron/30">
-              <div class="text-[11px] uppercase text-slate-200">Weather</div>
-              <div class="mt-1 text-3xl font-bold">28°C</div>
-              <div class="text-xs text-slate-300">Partly cloudy · Humidity 74%</div>
-            </div>
-            <div class="rounded-xl p-4 bg-gradient-to-br from-india/20 to-india/5 border border-india/30">
-              <div class="text-[11px] uppercase text-slate-200">Air Quality</div>
-              <div class="mt-1 text-3xl font-bold">86 <span class="text-sm font-normal">AQI</span></div>
-              <div class="text-xs text-slate-300">Moderate · PM2.5 42</div>
-            </div>
-            <div class="rounded-xl p-4 bg-white/5 border border-white/10 col-span-2">
-              <div class="text-[11px] uppercase text-slate-200 mb-2">Mini sentiment — past 7 days</div>
-              <canvas id="miniSpark" height="60"></canvas>
-            </div>
-            <div class="rounded-xl p-4 bg-white/5 border border-white/10 col-span-2 flex items-center justify-between">
-              <div>
-                <div class="text-[11px] uppercase text-slate-200">Next Janta Darbar</div>
-                <div class="text-lg font-semibold">Saturday · 10:00 AM</div>
-                <div class="text-xs text-slate-300">MLA Camp Office, Jhanjharpur</div>
-              </div>
-              <button class="px-3 py-2 rounded-lg bg-saffron text-ink text-sm font-semibold">Book Slot</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <svg class="block w-full text-slate-50" viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0,40 C360,80 1080,0 1440,40 L1440,60 L0,60 Z" fill="currentColor"/></svg>
-</section>
-
-<!-- Quick services -->
-<section class="max-w-7xl mx-auto px-4 -mt-6 relative z-10">
-  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-    <a href="#grievance" class="group p-4 rounded-2xl bg-white shadow-soft border border-slate-100 hover:-translate-y-0.5 transition">
-      <div class="w-10 h-10 rounded-xl bg-saffron/10 text-saffron flex items-center justify-center text-xl">📝</div>
-      <div class="mt-3 font-semibold text-sm">File Grievance</div>
-      <div class="text-xs text-slate-500">24×7 helpdesk</div>
-    </a>
-    <a href="#schemes" class="group p-4 rounded-2xl bg-white shadow-soft border border-slate-100 hover:-translate-y-0.5 transition">
-      <div class="w-10 h-10 rounded-xl bg-india/10 text-india flex items-center justify-center text-xl">🌾</div>
-      <div class="mt-3 font-semibold text-sm">Schemes</div>
-      <div class="text-xs text-slate-500">Apply & track</div>
-    </a>
-    <a href="#development" class="p-4 rounded-2xl bg-white shadow-soft border border-slate-100 hover:-translate-y-0.5 transition">
-      <div class="w-10 h-10 rounded-xl bg-navy/10 text-navy flex items-center justify-center text-xl">🏗️</div>
-      <div class="mt-3 font-semibold text-sm">Projects</div>
-      <div class="text-xs text-slate-500">Live status</div>
-    </a>
-    <a href="#news" class="p-4 rounded-2xl bg-white shadow-soft border border-slate-100 hover:-translate-y-0.5 transition">
-      <div class="w-10 h-10 rounded-xl bg-gold/10 text-gold flex items-center justify-center text-xl">📣</div>
-      <div class="mt-3 font-semibold text-sm">Notices</div>
-      <div class="text-xs text-slate-500">Latest updates</div>
-    </a>
-    <a href="#janta" class="p-4 rounded-2xl bg-white shadow-soft border border-slate-100 hover:-translate-y-0.5 transition">
-      <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center text-xl">🤝</div>
-      <div class="mt-3 font-semibold text-sm">Janta Darbar</div>
-      <div class="text-xs text-slate-500">Meet the MLA</div>
-    </a>
-    <a href="#contact" class="p-4 rounded-2xl bg-white shadow-soft border border-slate-100 hover:-translate-y-0.5 transition">
-      <div class="w-10 h-10 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center text-xl">📞</div>
-      <div class="mt-3 font-semibold text-sm">Contact</div>
-      <div class="text-xs text-slate-500">Camp office</div>
-    </a>
-  </div>
-</section>
-
-<!-- DASHBOARD -->
-<section id="dashboard" class="max-w-7xl mx-auto px-4 py-20">
-  <div class="flex items-end justify-between flex-wrap gap-4 mb-8">
-    <div>
-      <div class="text-saffron text-xs uppercase tracking-widest font-bold">Live Constituency Dashboard</div>
-      <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight mt-2">Development at a glance</h2>
-      <p class="text-slate-600 mt-2 max-w-2xl">Real-time view of project status, budget utilization, grievance flow and ward-level activity across Jhanjharpur Vidhan Sabha.</p>
-    </div>
-    <div class="flex items-center gap-2 bg-white p-1 rounded-xl shadow-soft border border-slate-100">
-      <button class="px-3 py-1.5 text-sm rounded-lg bg-navy text-white">FY 2025-26</button>
-      <button class="px-3 py-1.5 text-sm rounded-lg text-slate-600 hover:bg-slate-100">2024-25</button>
-      <button class="px-3 py-1.5 text-sm rounded-lg text-slate-600 hover:bg-slate-100">2023-24</button>
+<section id="top" class="relative">
+  <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1900&q=70" alt="Namaste Bharat Inn" class="absolute inset-0 w-full h-full object-cover" />
+  <div class="absolute inset-0 hero-overlay"></div>
+  <div class="relative max-w-7xl mx-auto px-4 py-24 md:py-32 text-white">
+    <p class="font-hindi text-2xl text-saffron mb-3 kpi-tick">स्वागतम् · अतिथि देवो भवः</p>
+    <h1 class="font-display text-4xl md:text-6xl font-700 max-w-3xl leading-tight kpi-tick">Warm Indian hospitality, in the heart of the city.</h1>
+    <p class="mt-5 max-w-xl text-white/85 text-lg kpi-tick">Boutique rooms, two grand banquet halls and cuisine that feels like home. Book direct for our best rate — no OTA commission.</p>
+    <div class="mt-8 flex flex-wrap gap-3 kpi-tick">
+      <a href="#book" class="rounded-full bg-saffron px-6 py-3 font-600 hover:bg-white hover:text-ink transition">Check Availability</a>
+      <a href="#banquets" class="rounded-full border border-white/40 px-6 py-3 font-600 hover:bg-white/10 transition">Plan an Event</a>
     </div>
   </div>
 
-  <!-- KPI strip -->
-  <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-    <div class="p-5 rounded-2xl bg-white border border-slate-100 shadow-soft">
-      <div class="flex items-center justify-between"><div class="text-xs uppercase tracking-widest text-slate-500">Budget Allocated</div><span class="text-xs text-green-600 font-semibold">↑ 12%</span></div>
-      <div class="mt-2 text-3xl font-extrabold">₹248 <span class="text-base font-medium text-slate-500">Cr</span></div>
-      <div class="mt-3 h-1.5 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-saffron to-gold" style="width:74%"></div></div>
-      <div class="mt-1 text-xs text-slate-500">74% utilized</div>
-    </div>
-    <div class="p-5 rounded-2xl bg-white border border-slate-100 shadow-soft">
-      <div class="flex items-center justify-between"><div class="text-xs uppercase tracking-widest text-slate-500">Projects Completed</div><span class="text-xs text-green-600 font-semibold">+38</span></div>
-      <div class="mt-2 text-3xl font-extrabold">342 <span class="text-base font-medium text-slate-500">/ 486</span></div>
-      <div class="mt-3 h-1.5 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-india to-emerald-400" style="width:70%"></div></div>
-      <div class="mt-1 text-xs text-slate-500">70% completion rate</div>
-    </div>
-    <div class="p-5 rounded-2xl bg-white border border-slate-100 shadow-soft">
-      <div class="flex items-center justify-between"><div class="text-xs uppercase tracking-widest text-slate-500">Grievances Closed</div><span class="text-xs text-green-600 font-semibold">↑ 6%</span></div>
-      <div class="mt-2 text-3xl font-extrabold">12,847</div>
-      <div class="mt-3 h-1.5 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-navy to-sky-400" style="width:92%"></div></div>
-      <div class="mt-1 text-xs text-slate-500">Avg resolution: 4.2 days</div>
-    </div>
-    <div class="p-5 rounded-2xl bg-white border border-slate-100 shadow-soft">
-      <div class="flex items-center justify-between"><div class="text-xs uppercase tracking-widest text-slate-500">Beneficiaries</div><span class="text-xs text-green-600 font-semibold">↑ 18%</span></div>
-      <div class="mt-2 text-3xl font-extrabold">2.14 <span class="text-base font-medium text-slate-500">Lakh</span></div>
-      <div class="mt-3 h-1.5 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-rose-500 to-pink-400" style="width:85%"></div></div>
-      <div class="mt-1 text-xs text-slate-500">Across 17 active schemes</div>
-    </div>
-  </div>
-
-  <!-- Charts -->
-  <div class="grid lg:grid-cols-3 gap-4 mt-6">
-    <div class="lg:col-span-2 p-6 rounded-2xl bg-white border border-slate-100 shadow-soft">
-      <div class="flex items-center justify-between mb-4">
-        <div>
-          <div class="font-semibold">Sector-wise Budget Utilization</div>
-          <div class="text-xs text-slate-500">In ₹ Crore · Allocated vs Spent</div>
-        </div>
-        <div class="flex items-center gap-3 text-xs"><span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-navy"></span>Allocated</span><span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-saffron"></span>Spent</span></div>
-      </div>
-      <canvas id="budgetChart" height="120"></canvas>
-    </div>
-    <div class="p-6 rounded-2xl bg-white border border-slate-100 shadow-soft">
-      <div class="font-semibold">Project Status</div>
-      <div class="text-xs text-slate-500 mb-4">Across 486 active works</div>
-      <canvas id="statusChart" height="200"></canvas>
-      <div class="mt-4 grid grid-cols-2 gap-2 text-xs">
-        <div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Completed · 342</div>
-        <div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span> Ongoing · 98</div>
-        <div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span> Tendered · 31</div>
-        <div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> Delayed · 15</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="grid lg:grid-cols-3 gap-4 mt-4">
-    <div class="p-6 rounded-2xl bg-white border border-slate-100 shadow-soft">
-      <div class="flex items-center justify-between mb-4">
-        <div>
-          <div class="font-semibold">Grievances — last 12 months</div>
-          <div class="text-xs text-slate-500">Received vs Resolved</div>
-        </div>
-      </div>
-      <canvas id="grievanceChart" height="160"></canvas>
-    </div>
-    <div class="p-6 rounded-2xl bg-white border border-slate-100 shadow-soft">
-      <div class="flex items-center justify-between mb-4">
-        <div class="font-semibold">Top Grievance Categories</div>
-      </div>
-      <canvas id="categoryChart" height="160"></canvas>
-    </div>
-    <div class="p-6 rounded-2xl bg-white border border-slate-100 shadow-soft">
-      <div class="font-semibold mb-1">Ward-wise Activity</div>
-      <div class="text-xs text-slate-500 mb-3">Projects executed in each ward</div>
-      <div class="space-y-2.5 max-h-[260px] overflow-auto pr-2" id="wardList"></div>
-    </div>
-  </div>
-</section>
-
-<!-- About / MLA -->
-<section class="bg-white border-y border-slate-100">
-  <div class="max-w-7xl mx-auto px-4 py-20 grid lg:grid-cols-12 gap-10 items-center">
-    <div class="lg:col-span-5">
-      <div class="relative">
-        <div class="absolute -inset-3 bg-gradient-to-tr from-saffron/30 to-india/30 blur-2xl rounded-3xl"></div>
-        <div class="relative rounded-3xl overflow-hidden border border-slate-200 shadow-soft aspect-[4/5] bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
-          <svg viewBox="0 0 120 160" class="w-full h-full opacity-80">
-            <defs><linearGradient id="lg1" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#0d2a6b"/><stop offset="1" stop-color="#091230"/></linearGradient></defs>
-            <rect width="120" height="160" fill="url(#lg1)"/>
-            <circle cx="60" cy="55" r="22" fill="#fde6c0"/>
-            <path d="M20 160 C20 110 40 90 60 90 C80 90 100 110 100 160 Z" fill="#ff9933"/>
-            <rect x="46" y="74" width="28" height="10" fill="#fde6c0"/>
-          </svg>
-          <div class="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black/70 to-transparent text-white">
-            <div class="text-xs uppercase tracking-widest opacity-80">Honourable MLA</div>
-            <div class="text-xl font-bold">Shri / Smt. [Name]</div>
-            <div class="text-xs opacity-80">Jhanjharpur · Term 2025–2030</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="lg:col-span-7">
-      <div class="text-saffron text-xs uppercase tracking-widest font-bold">Message from the MLA</div>
-      <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight mt-2">Together, for a brighter Jhanjharpur.</h2>
-      <p class="mt-4 text-slate-600 leading-relaxed">
-        Our constituency stretches across the historic plains of Mithila, blessed with the Kamala and Kosi rivers and a vibrant cultural heritage. Over the last term, we have focused on three pillars — <span class="font-semibold text-ink">infrastructure, education and livelihood</span> — and this portal is built to keep every citizen informed of the progress on each promise.
-      </p>
-      <p class="mt-3 text-slate-600 leading-relaxed">
-        From the weekly Janta Darbar to a 24×7 grievance helpdesk, we are committed to a government that listens, responds and delivers.
-      </p>
-      <blockquote class="mt-6 p-5 rounded-2xl bg-slate-50 border-l-4 border-saffron text-ink">
-        <span class="font-hindi text-xl">"जनता की सेवा ही सच्ची राजनीति है।"</span>
-        <div class="text-xs text-slate-500 mt-1">— Service to the people is the only true politics.</div>
-      </blockquote>
-      <div class="mt-6 grid grid-cols-3 gap-3 max-w-md">
-        <div class="p-3 rounded-xl bg-slate-50 text-center"><div class="text-xl font-bold">15+</div><div class="text-[11px] text-slate-500 uppercase tracking-wider">Years of Service</div></div>
-        <div class="p-3 rounded-xl bg-slate-50 text-center"><div class="text-xl font-bold">200+</div><div class="text-[11px] text-slate-500 uppercase tracking-wider">Villages Visited</div></div>
-        <div class="p-3 rounded-xl bg-slate-50 text-center"><div class="text-xl font-bold">52</div><div class="text-[11px] text-slate-500 uppercase tracking-wider">Janta Darbars</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Development projects -->
-<section id="development" class="max-w-7xl mx-auto px-4 py-20">
-  <div class="text-center max-w-2xl mx-auto">
-    <div class="text-india text-xs uppercase tracking-widest font-bold">Development</div>
-    <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight mt-2">Flagship projects under way</h2>
-    <p class="text-slate-600 mt-3">Each project below is monitored on a public dashboard with photo updates from the ground.</p>
-  </div>
-  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
-    <!-- card template -->
-    <div class="rounded-2xl bg-white border border-slate-100 shadow-soft overflow-hidden group">
-      <div class="aspect-[16/10] bg-gradient-to-br from-sky-400 to-blue-700 relative">
-        <div class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-white/95 text-xs font-semibold text-emerald-700">● Ongoing</div>
-        <svg viewBox="0 0 200 120" class="w-full h-full opacity-90"><path d="M0 80 L60 50 L120 70 L200 30 L200 120 L0 120 Z" fill="rgba(255,255,255,0.12)"/><path d="M0 100 L80 70 L140 90 L200 60 L200 120 L0 120 Z" fill="rgba(255,255,255,0.18)"/><rect x="20" y="55" width="14" height="35" fill="white" opacity="0.85"/><rect x="60" y="40" width="14" height="50" fill="white" opacity="0.75"/><rect x="100" y="60" width="14" height="30" fill="white" opacity="0.85"/></svg>
-      </div>
-      <div class="p-5">
-        <div class="text-[11px] uppercase tracking-widest text-slate-500">Infrastructure</div>
-        <div class="font-bold mt-1">Kamala River Bridge Expansion</div>
-        <p class="text-sm text-slate-600 mt-1">4-lane bridge connecting Jhanjharpur with Phulparas, reducing travel time by 40%.</p>
-        <div class="mt-4">
-          <div class="flex justify-between text-xs mb-1"><span class="text-slate-500">Progress</span><span class="font-semibold">68%</span></div>
-          <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-saffron to-gold" style="width:68%"></div></div>
-        </div>
-        <div class="mt-4 flex items-center justify-between text-xs text-slate-500"><span>₹ 42 Cr</span><span>ETA: Mar 2027</span></div>
-      </div>
-    </div>
-    <div class="rounded-2xl bg-white border border-slate-100 shadow-soft overflow-hidden">
-      <div class="aspect-[16/10] bg-gradient-to-br from-emerald-400 to-india relative">
-        <div class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-white/95 text-xs font-semibold text-emerald-700">● Ongoing</div>
-        <svg viewBox="0 0 200 120" class="w-full h-full"><circle cx="40" cy="80" r="22" fill="rgba(255,255,255,0.3)"/><circle cx="100" cy="60" r="30" fill="rgba(255,255,255,0.25)"/><circle cx="160" cy="85" r="18" fill="rgba(255,255,255,0.35)"/><path d="M0 100 Q100 70 200 100 L200 120 L0 120 Z" fill="rgba(255,255,255,0.2)"/></svg>
-      </div>
-      <div class="p-5">
-        <div class="text-[11px] uppercase tracking-widest text-slate-500">Health</div>
-        <div class="font-bold mt-1">200-bed Sub-Divisional Hospital</div>
-        <p class="text-sm text-slate-600 mt-1">Modern multi-speciality wing with ICU, dialysis and mother-care centre.</p>
-        <div class="mt-4">
-          <div class="flex justify-between text-xs mb-1"><span class="text-slate-500">Progress</span><span class="font-semibold">42%</span></div>
-          <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-india to-emerald-300" style="width:42%"></div></div>
-        </div>
-        <div class="mt-4 flex items-center justify-between text-xs text-slate-500"><span>₹ 78 Cr</span><span>ETA: Aug 2027</span></div>
-      </div>
-    </div>
-    <div class="rounded-2xl bg-white border border-slate-100 shadow-soft overflow-hidden">
-      <div class="aspect-[16/10] bg-gradient-to-br from-amber-400 to-rose-500 relative">
-        <div class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-white/95 text-xs font-semibold text-emerald-700">● Completed</div>
-        <svg viewBox="0 0 200 120" class="w-full h-full"><path d="M30 90 L70 50 L110 90" stroke="white" stroke-width="3" fill="none"/><rect x="40" y="80" width="60" height="30" fill="rgba(255,255,255,0.35)"/><rect x="120" y="60" width="50" height="50" fill="rgba(255,255,255,0.4)"/><rect x="125" y="70" width="10" height="10" fill="white"/><rect x="145" y="70" width="10" height="10" fill="white"/></svg>
-      </div>
-      <div class="p-5">
-        <div class="text-[11px] uppercase tracking-widest text-slate-500">Education</div>
-        <div class="font-bold mt-1">Smart Class — 84 Schools</div>
-        <p class="text-sm text-slate-600 mt-1">Digital classrooms, libraries and computer labs across govt. schools.</p>
-        <div class="mt-4">
-          <div class="flex justify-between text-xs mb-1"><span class="text-slate-500">Progress</span><span class="font-semibold">100%</span></div>
-          <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-emerald-500" style="width:100%"></div></div>
-        </div>
-        <div class="mt-4 flex items-center justify-between text-xs text-slate-500"><span>₹ 18 Cr</span><span>Delivered: Jan 2026</span></div>
-      </div>
-    </div>
-    <div class="rounded-2xl bg-white border border-slate-100 shadow-soft overflow-hidden">
-      <div class="aspect-[16/10] bg-gradient-to-br from-cyan-400 to-navy relative">
-        <div class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-white/95 text-xs font-semibold text-amber-700">● Tendered</div>
-        <svg viewBox="0 0 200 120" class="w-full h-full"><path d="M0 60 Q50 30 100 60 T200 60 L200 120 L0 120 Z" fill="rgba(255,255,255,0.25)"/><circle cx="50" cy="40" r="10" fill="white" opacity="0.8"/></svg>
-      </div>
-      <div class="p-5">
-        <div class="text-[11px] uppercase tracking-widest text-slate-500">Water & Sanitation</div>
-        <div class="font-bold mt-1">Har Ghar Nal Jal — Phase III</div>
-        <p class="text-sm text-slate-600 mt-1">Piped water connections to 22,000 additional rural households.</p>
-        <div class="mt-4">
-          <div class="flex justify-between text-xs mb-1"><span class="text-slate-500">Progress</span><span class="font-semibold">12%</span></div>
-          <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-cyan-400 to-blue-500" style="width:12%"></div></div>
-        </div>
-        <div class="mt-4 flex items-center justify-between text-xs text-slate-500"><span>₹ 56 Cr</span><span>ETA: Dec 2027</span></div>
-      </div>
-    </div>
-    <div class="rounded-2xl bg-white border border-slate-100 shadow-soft overflow-hidden">
-      <div class="aspect-[16/10] bg-gradient-to-br from-fuchsia-500 to-purple-700 relative">
-        <div class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-white/95 text-xs font-semibold text-emerald-700">● Ongoing</div>
-        <svg viewBox="0 0 200 120" class="w-full h-full"><circle cx="100" cy="60" r="34" fill="rgba(255,255,255,0.25)"/><path d="M70 70 L130 70 M70 60 L130 60 M70 50 L130 50" stroke="white" stroke-width="2"/></svg>
-      </div>
-      <div class="p-5">
-        <div class="text-[11px] uppercase tracking-widest text-slate-500">Skill & Livelihood</div>
-        <div class="font-bold mt-1">Jhanjharpur Skill Academy</div>
-        <p class="text-sm text-slate-600 mt-1">Free training in IT, tailoring, electrical and Madhubani art for 5,000 youth.</p>
-        <div class="mt-4">
-          <div class="flex justify-between text-xs mb-1"><span class="text-slate-500">Progress</span><span class="font-semibold">55%</span></div>
-          <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-fuchsia-500 to-purple-500" style="width:55%"></div></div>
-        </div>
-        <div class="mt-4 flex items-center justify-between text-xs text-slate-500"><span>₹ 9 Cr</span><span>ETA: Jul 2026</span></div>
-      </div>
-    </div>
-    <div class="rounded-2xl bg-white border border-slate-100 shadow-soft overflow-hidden">
-      <div class="aspect-[16/10] bg-gradient-to-br from-yellow-400 to-orange-600 relative">
-        <div class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-white/95 text-xs font-semibold text-emerald-700">● Completed</div>
-        <svg viewBox="0 0 200 120" class="w-full h-full"><path d="M0 90 L200 90" stroke="white" stroke-width="2" stroke-dasharray="6 4"/><path d="M30 90 L60 70 L80 80 L120 60 L160 75 L200 60" stroke="white" stroke-width="3" fill="none"/></svg>
-      </div>
-      <div class="p-5">
-        <div class="text-[11px] uppercase tracking-widest text-slate-500">Roads</div>
-        <div class="font-bold mt-1">Rural Roads — 312 km</div>
-        <p class="text-sm text-slate-600 mt-1">All-weather PMGSY roads connecting 184 villages.</p>
-        <div class="mt-4">
-          <div class="flex justify-between text-xs mb-1"><span class="text-slate-500">Progress</span><span class="font-semibold">100%</span></div>
-          <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-emerald-500" style="width:100%"></div></div>
-        </div>
-        <div class="mt-4 flex items-center justify-between text-xs text-slate-500"><span>₹ 124 Cr</span><span>Delivered: Nov 2025</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Schemes -->
-<section id="schemes" class="bg-gradient-to-b from-slate-50 to-white py-20 border-y border-slate-100">
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="flex items-end justify-between flex-wrap gap-4">
-      <div>
-        <div class="text-india text-xs uppercase tracking-widest font-bold">Schemes</div>
-        <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight mt-2">Welfare schemes for you</h2>
-      </div>
-      <input placeholder="Search a scheme…" class="px-4 py-2.5 rounded-xl border border-slate-200 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-saffron/40 w-full sm:w-72"/>
-    </div>
-    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
-      <div class="p-5 rounded-2xl bg-white border border-slate-100 shadow-soft hover:-translate-y-0.5 transition">
-        <div class="w-11 h-11 rounded-xl bg-saffron/15 text-saffron flex items-center justify-center text-2xl">🌾</div>
-        <div class="mt-3 font-bold">PM Kisan Samman Nidhi</div>
-        <p class="text-sm text-slate-600 mt-1">₹6,000/yr direct benefit for landholder farmer families.</p>
-        <a class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-navy">Apply →</a>
-      </div>
-      <div class="p-5 rounded-2xl bg-white border border-slate-100 shadow-soft hover:-translate-y-0.5 transition">
-        <div class="w-11 h-11 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center text-2xl">👩</div>
-        <div class="mt-3 font-bold">Mukhya Mantri Kanya Utthan</div>
-        <p class="text-sm text-slate-600 mt-1">Scholarship from birth to graduation for girls in Bihar.</p>
-        <a class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-navy">Apply →</a>
-      </div>
-      <div class="p-5 rounded-2xl bg-white border border-slate-100 shadow-soft hover:-translate-y-0.5 transition">
-        <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center text-2xl">🏠</div>
-        <div class="mt-3 font-bold">PM Awas Yojana — Gramin</div>
-        <p class="text-sm text-slate-600 mt-1">Housing assistance for eligible rural families.</p>
-        <a class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-navy">Apply →</a>
-      </div>
-      <div class="p-5 rounded-2xl bg-white border border-slate-100 shadow-soft hover:-translate-y-0.5 transition">
-        <div class="w-11 h-11 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl">💼</div>
-        <div class="mt-3 font-bold">MGNREGA</div>
-        <p class="text-sm text-slate-600 mt-1">Guaranteed 100 days of wage employment per household.</p>
-        <a class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-navy">Apply →</a>
-      </div>
-      <div class="p-5 rounded-2xl bg-white border border-slate-100 shadow-soft hover:-translate-y-0.5 transition">
-        <div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-2xl">🎓</div>
-        <div class="mt-3 font-bold">Student Credit Card</div>
-        <p class="text-sm text-slate-600 mt-1">Up to ₹4 lakh loan for higher education.</p>
-        <a class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-navy">Apply →</a>
-      </div>
-      <div class="p-5 rounded-2xl bg-white border border-slate-100 shadow-soft hover:-translate-y-0.5 transition">
-        <div class="w-11 h-11 rounded-xl bg-fuchsia-100 text-fuchsia-600 flex items-center justify-center text-2xl">🏥</div>
-        <div class="mt-3 font-bold">Ayushman Bharat</div>
-        <p class="text-sm text-slate-600 mt-1">₹5 lakh/yr cashless treatment for eligible families.</p>
-        <a class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-navy">Apply →</a>
-      </div>
-      <div class="p-5 rounded-2xl bg-white border border-slate-100 shadow-soft hover:-translate-y-0.5 transition">
-        <div class="w-11 h-11 rounded-xl bg-cyan-100 text-cyan-600 flex items-center justify-center text-2xl">⚡</div>
-        <div class="mt-3 font-bold">Har Ghar Bijli</div>
-        <p class="text-sm text-slate-600 mt-1">Free electricity connections to BPL households.</p>
-        <a class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-navy">Apply →</a>
-      </div>
-      <div class="p-5 rounded-2xl bg-white border border-slate-100 shadow-soft hover:-translate-y-0.5 transition">
-        <div class="w-11 h-11 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-2xl">👵</div>
-        <div class="mt-3 font-bold">Vridhjan Pension</div>
-        <p class="text-sm text-slate-600 mt-1">Monthly pension for senior citizens above 60.</p>
-        <a class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-navy">Apply →</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Grievance -->
-<section id="grievance" class="max-w-7xl mx-auto px-4 py-20 grid lg:grid-cols-12 gap-8 items-start">
-  <div class="lg:col-span-5">
-    <div class="text-saffron text-xs uppercase tracking-widest font-bold">Grievance Redressal</div>
-    <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight mt-2">Your voice, our priority.</h2>
-    <p class="text-slate-600 mt-3">File a complaint, track its status in real time, and receive SMS updates at every stage. Average resolution time is just <span class="font-semibold text-ink">4.2 days</span>.</p>
-    <div class="mt-6 space-y-3">
-      <div class="flex items-start gap-3"><div class="w-9 h-9 rounded-lg bg-saffron/15 text-saffron flex items-center justify-center font-bold">1</div><div><div class="font-semibold">Submit</div><div class="text-sm text-slate-600">Online form, WhatsApp 9-XXXXX-XXXXX or toll-free 1800-345-6789.</div></div></div>
-      <div class="flex items-start gap-3"><div class="w-9 h-9 rounded-lg bg-india/15 text-india flex items-center justify-center font-bold">2</div><div><div class="font-semibold">Auto-routed</div><div class="text-sm text-slate-600">Your case is sent to the right department within 30 minutes.</div></div></div>
-      <div class="flex items-start gap-3"><div class="w-9 h-9 rounded-lg bg-navy/15 text-navy flex items-center justify-center font-bold">3</div><div><div class="font-semibold">Track & close</div><div class="text-sm text-slate-600">Real-time status, SMS at each step, escalation if delayed.</div></div></div>
-    </div>
-    <div class="mt-6 p-5 rounded-2xl bg-gradient-to-r from-navy to-ink text-white flex items-center justify-between">
-      <div>
-        <div class="text-xs uppercase tracking-widest opacity-80">Track existing complaint</div>
-        <div class="text-lg font-semibold">Enter your Reference ID</div>
-      </div>
-      <div class="flex gap-2">
-        <input class="px-3 py-2 rounded-lg text-ink bg-white/95 text-sm w-36" placeholder="JHJ-2026-…"/>
-        <button class="px-4 py-2 rounded-lg bg-saffron text-ink text-sm font-semibold">Track</button>
-      </div>
-    </div>
-  </div>
-  <div class="lg:col-span-7">
-    <form class="p-6 md:p-8 rounded-3xl bg-white border border-slate-100 shadow-soft grid md:grid-cols-2 gap-4">
-      <div class="md:col-span-2 flex items-center justify-between">
-        <div class="font-bold text-lg">File a new grievance</div>
-        <span class="text-xs text-slate-500">All fields marked * required</span>
-      </div>
-      <label class="block"><span class="text-xs font-semibold text-slate-600">Full Name *</span><input class="mt-1 w-full px-3 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-saffron/40" placeholder="As per Aadhaar"/></label>
-      <label class="block"><span class="text-xs font-semibold text-slate-600">Mobile *</span><input class="mt-1 w-full px-3 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-saffron/40" placeholder="+91 ……"/></label>
-      <label class="block"><span class="text-xs font-semibold text-slate-600">Ward / Village</span><input class="mt-1 w-full px-3 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-saffron/40" placeholder="e.g. Ghoghardiha"/></label>
-      <label class="block"><span class="text-xs font-semibold text-slate-600">Category *</span>
-        <select class="mt-1 w-full px-3 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-saffron/40">
-          <option>Roads & Bridges</option><option>Electricity</option><option>Water Supply</option><option>Sanitation</option><option>Education</option><option>Health</option><option>Pension / Scheme</option><option>Other</option>
+  <!-- Quick booking widget -->
+  <div class="relative max-w-7xl mx-auto px-4 -mb-12 md:-mb-10">
+    <form id="quickBook" class="bg-white text-ink rounded-2xl shadow-soft p-4 md:p-5 grid grid-cols-2 md:grid-cols-5 gap-3">
+      <label class="text-sm col-span-1">
+        <span class="block text-xs text-black/50 mb-1">Check-in</span>
+        <input type="date" name="checkIn" required class="w-full rounded-lg border border-black/10 px-3 py-2.5 focus:ring-2 focus:ring-saffron outline-none" />
+      </label>
+      <label class="text-sm col-span-1">
+        <span class="block text-xs text-black/50 mb-1">Check-out</span>
+        <input type="date" name="checkOut" required class="w-full rounded-lg border border-black/10 px-3 py-2.5 focus:ring-2 focus:ring-saffron outline-none" />
+      </label>
+      <label class="text-sm col-span-1">
+        <span class="block text-xs text-black/50 mb-1">Room type</span>
+        <select name="roomType" class="w-full rounded-lg border border-black/10 px-3 py-2.5 focus:ring-2 focus:ring-saffron outline-none"></select>
+      </label>
+      <label class="text-sm col-span-1">
+        <span class="block text-xs text-black/50 mb-1">Guests</span>
+        <select name="guests" class="w-full rounded-lg border border-black/10 px-3 py-2.5 focus:ring-2 focus:ring-saffron outline-none">
+          <option>1</option><option selected>2</option><option>3</option><option>4</option>
         </select>
       </label>
-      <label class="block md:col-span-2"><span class="text-xs font-semibold text-slate-600">Description *</span><textarea rows="4" class="mt-1 w-full px-3 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-saffron/40" placeholder="Briefly describe the issue, location and when it started…"></textarea></label>
-      <label class="block md:col-span-2"><span class="text-xs font-semibold text-slate-600">Attach photo (optional)</span>
-        <div class="mt-1 px-3 py-6 rounded-lg border-2 border-dashed border-slate-200 text-center text-sm text-slate-500 hover:border-saffron/50 cursor-pointer">📎 Click to upload or drag a file here (JPG/PNG, max 5 MB)</div>
-      </label>
-      <div class="md:col-span-2 flex items-center justify-between flex-wrap gap-2 pt-2">
-        <label class="flex items-center gap-2 text-xs text-slate-600"><input type="checkbox" class="rounded"/> I confirm the above is true to my knowledge.</label>
-        <button type="button" class="px-6 py-3 rounded-xl bg-gradient-to-r from-saffron to-gold text-ink font-semibold shadow-soft hover:brightness-105">Submit Grievance</button>
-      </div>
+      <button class="col-span-2 md:col-span-1 rounded-lg bg-ink text-white font-600 px-4 py-2.5 hover:bg-saffron transition self-end">Search</button>
     </form>
   </div>
 </section>
 
-<!-- News + Janta Darbar -->
-<section id="news" class="bg-white border-y border-slate-100">
-  <div class="max-w-7xl mx-auto px-4 py-20 grid lg:grid-cols-3 gap-8">
-    <div class="lg:col-span-2">
-      <div class="text-saffron text-xs uppercase tracking-widest font-bold">Latest</div>
-      <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight mt-2">News & Notices</h2>
-      <div class="mt-6 grid sm:grid-cols-2 gap-4">
-        <article class="rounded-2xl overflow-hidden border border-slate-100 shadow-soft bg-white">
-          <div class="aspect-[16/9] bg-gradient-to-br from-navy to-sky-500 flex items-center justify-center text-white text-5xl">📰</div>
-          <div class="p-5">
-            <div class="text-[11px] uppercase tracking-widest text-saffron font-bold">Announcement</div>
-            <div class="font-bold mt-1">Inauguration of new Sub-Divisional Hospital wing</div>
-            <p class="text-sm text-slate-600 mt-1">Hon'ble Chief Minister to dedicate 200-bed wing to public on 14 June 2026.</p>
-            <div class="mt-3 text-xs text-slate-500">27 May 2026 · 3 min read</div>
-          </div>
-        </article>
-        <article class="rounded-2xl overflow-hidden border border-slate-100 shadow-soft bg-white">
-          <div class="aspect-[16/9] bg-gradient-to-br from-india to-emerald-300 flex items-center justify-center text-white text-5xl">🌾</div>
-          <div class="p-5">
-            <div class="text-[11px] uppercase tracking-widest text-india font-bold">Scheme</div>
-            <div class="font-bold mt-1">Special camps for PM Kisan eKYC across all blocks</div>
-            <p class="text-sm text-slate-600 mt-1">Camps held in 27 panchayats from 1–15 June. Bring Aadhaar & bank passbook.</p>
-            <div class="mt-3 text-xs text-slate-500">25 May 2026 · 2 min read</div>
-          </div>
-        </article>
-        <article class="rounded-2xl overflow-hidden border border-slate-100 shadow-soft bg-white sm:col-span-2 grid sm:grid-cols-5">
-          <div class="sm:col-span-2 aspect-[16/9] sm:aspect-auto bg-gradient-to-br from-saffron to-rose-500 flex items-center justify-center text-white text-5xl">🛣️</div>
-          <div class="sm:col-span-3 p-5">
-            <div class="text-[11px] uppercase tracking-widest text-navy font-bold">Infrastructure</div>
-            <div class="font-bold mt-1">312 km PMGSY roads dedicated to public</div>
-            <p class="text-sm text-slate-600 mt-1">All-weather connectivity now reaches 184 villages across Jhanjharpur constituency. The work was completed two months ahead of schedule.</p>
-            <div class="mt-3 text-xs text-slate-500">22 May 2026 · 4 min read</div>
-          </div>
-        </article>
-      </div>
-      <div class="mt-6 flex justify-center">
-        <button class="px-5 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-sm font-semibold">View all news →</button>
-      </div>
-    </div>
+<!-- Stats -->
+<section class="max-w-7xl mx-auto px-4 pt-24 pb-6 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+  <div class="reveal"><div class="font-display text-3xl font-700 text-saffron">12</div><div class="text-sm text-black/60">Boutique Rooms</div></div>
+  <div class="reveal"><div class="font-display text-3xl font-700 text-saffron">2</div><div class="text-sm text-black/60">Banquet Halls</div></div>
+  <div class="reveal"><div class="font-display text-3xl font-700 text-saffron">450+</div><div class="text-sm text-black/60">Event Capacity</div></div>
+  <div class="reveal"><div class="font-display text-3xl font-700 text-saffron">4.8★</div><div class="text-sm text-black/60">Guest Rating</div></div>
+</section>
 
-    <aside id="janta" class="lg:sticky lg:top-28 self-start space-y-5">
-      <div class="p-6 rounded-2xl bg-gradient-to-br from-navy to-ink text-white shadow-soft">
-        <div class="text-xs uppercase tracking-widest text-saffron font-bold">Janta Darbar</div>
-        <div class="font-extrabold text-xl mt-1">Meet your MLA</div>
-        <p class="text-sm text-slate-200 mt-2">Every Saturday & Wednesday · 10:00 AM – 1:00 PM</p>
-        <div class="mt-4 grid grid-cols-3 gap-2 text-center text-xs">
-          <div class="p-2 rounded-lg bg-white/10"><div class="font-bold text-base">Sat</div><div class="opacity-80">10 AM</div></div>
-          <div class="p-2 rounded-lg bg-saffron text-ink"><div class="font-bold text-base">Wed</div><div>10 AM</div></div>
-          <div class="p-2 rounded-lg bg-white/10"><div class="font-bold text-base">Sun</div><div class="opacity-80">By req.</div></div>
-        </div>
-        <button class="mt-5 w-full px-4 py-2.5 rounded-xl bg-saffron text-ink font-semibold">Book a Slot</button>
-      </div>
-      <div class="p-6 rounded-2xl bg-white border border-slate-100 shadow-soft">
-        <div class="font-bold">Upcoming events</div>
-        <ul class="mt-3 space-y-3 text-sm">
-          <li class="flex items-start gap-3"><div class="w-12 text-center"><div class="text-saffron text-xs font-bold">JUN</div><div class="text-2xl font-extrabold leading-none">02</div></div><div><div class="font-semibold">Block-level Health Camp</div><div class="text-slate-500 text-xs">Phulparas · 9 AM–2 PM</div></div></li>
-          <li class="flex items-start gap-3"><div class="w-12 text-center"><div class="text-saffron text-xs font-bold">JUN</div><div class="text-2xl font-extrabold leading-none">08</div></div><div><div class="font-semibold">Skill Mela for Youth</div><div class="text-slate-500 text-xs">Jhanjharpur College · 10 AM</div></div></li>
-          <li class="flex items-start gap-3"><div class="w-12 text-center"><div class="text-saffron text-xs font-bold">JUN</div><div class="text-2xl font-extrabold leading-none">14</div></div><div><div class="font-semibold">Hospital Inauguration</div><div class="text-slate-500 text-xs">SDH Campus · 11 AM</div></div></li>
-        </ul>
-      </div>
-    </aside>
+<!-- Rooms -->
+<section id="rooms" class="max-w-7xl mx-auto px-4 py-16">
+  <div class="flex items-end justify-between mb-8">
+    <div>
+      <p class="text-gold uppercase tracking-[0.2em] text-xs font-600">Stay with us</p>
+      <h2 class="font-display text-3xl md:text-4xl font-700 mt-1">Rooms &amp; Suites</h2>
+    </div>
+    <p class="hidden md:block text-sm text-black/50 max-w-xs text-right">Four room categories across 12 keys — from cosy deluxe to our panoramic premium suites.</p>
+  </div>
+  <div id="roomsGrid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+</section>
+
+<!-- Banquets -->
+<section id="banquets" class="bg-white/60 border-y border-black/5">
+  <div class="max-w-7xl mx-auto px-4 py-16">
+    <div class="mb-8">
+      <p class="text-gold uppercase tracking-[0.2em] text-xs font-600">Celebrate with us</p>
+      <h2 class="font-display text-3xl md:text-4xl font-700 mt-1">Banquets &amp; Events</h2>
+    </div>
+    <div id="banquetsGrid" class="grid md:grid-cols-2 gap-6"></div>
   </div>
 </section>
 
-<!-- Gallery -->
-<section id="gallery" class="max-w-7xl mx-auto px-4 py-20">
-  <div class="flex items-end justify-between flex-wrap gap-4">
-    <div>
-      <div class="text-india text-xs uppercase tracking-widest font-bold">Gallery</div>
-      <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight mt-2">From the ground</h2>
-    </div>
-    <div class="flex gap-2 text-xs">
-      <button class="px-3 py-1.5 rounded-full bg-navy text-white font-semibold">All</button>
-      <button class="px-3 py-1.5 rounded-full bg-slate-100 text-slate-600">Events</button>
-      <button class="px-3 py-1.5 rounded-full bg-slate-100 text-slate-600">Projects</button>
-      <button class="px-3 py-1.5 rounded-full bg-slate-100 text-slate-600">Janta Darbar</button>
-    </div>
+<!-- Amenities -->
+<section id="amenities" class="max-w-7xl mx-auto px-4 py-16">
+  <p class="text-gold uppercase tracking-[0.2em] text-xs font-600">Everything you need</p>
+  <h2 class="font-display text-3xl md:text-4xl font-700 mt-1 mb-8">Hotel Amenities</h2>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div class="rounded-xl bg-white p-5 shadow-soft"><div class="text-2xl">🍽️</div><div class="font-600 mt-2">Multi-cuisine Restaurant</div><p class="text-sm text-black/55">Indian, Mughlai &amp; continental.</p></div>
+    <div class="rounded-xl bg-white p-5 shadow-soft"><div class="text-2xl">🛜</div><div class="font-600 mt-2">High-speed Wi-Fi</div><p class="text-sm text-black/55">Free across the property.</p></div>
+    <div class="rounded-xl bg-white p-5 shadow-soft"><div class="text-2xl">🚗</div><div class="font-600 mt-2">Valet Parking</div><p class="text-sm text-black/55">Ample secure parking.</p></div>
+    <div class="rounded-xl bg-white p-5 shadow-soft"><div class="text-2xl">🧖</div><div class="font-600 mt-2">Spa &amp; Wellness</div><p class="text-sm text-black/55">Ayurvedic therapies.</p></div>
+    <div class="rounded-xl bg-white p-5 shadow-soft"><div class="text-2xl">🏊</div><div class="font-600 mt-2">Rooftop Pool</div><p class="text-sm text-black/55">With city views.</p></div>
+    <div class="rounded-xl bg-white p-5 shadow-soft"><div class="text-2xl">🛎️</div><div class="font-600 mt-2">24×7 Room Service</div><p class="text-sm text-black/55">Round-the-clock care.</p></div>
+    <div class="rounded-xl bg-white p-5 shadow-soft"><div class="text-2xl">💼</div><div class="font-600 mt-2">Business Centre</div><p class="text-sm text-black/55">Meetings &amp; printing.</p></div>
+    <div class="rounded-xl bg-white p-5 shadow-soft"><div class="text-2xl">🚕</div><div class="font-600 mt-2">Airport Transfers</div><p class="text-sm text-black/55">On request.</p></div>
   </div>
-  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-8">
-    <div class="aspect-square rounded-2xl bg-gradient-to-br from-saffron to-rose-500"></div>
-    <div class="aspect-square rounded-2xl bg-gradient-to-br from-india to-emerald-300 md:row-span-2 md:aspect-auto"></div>
-    <div class="aspect-square rounded-2xl bg-gradient-to-br from-navy to-sky-400"></div>
-    <div class="aspect-square rounded-2xl bg-gradient-to-br from-amber-400 to-pink-500"></div>
-    <div class="aspect-square rounded-2xl bg-gradient-to-br from-purple-500 to-fuchsia-400"></div>
-    <div class="aspect-square rounded-2xl bg-gradient-to-br from-cyan-400 to-sky-700"></div>
-    <div class="aspect-square rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-700"></div>
+</section>
+
+<!-- Booking form -->
+<section id="book" class="bg-ink text-white">
+  <div class="max-w-5xl mx-auto px-4 py-16">
+    <div class="text-center mb-8">
+      <p class="text-saffron uppercase tracking-[0.2em] text-xs font-600">Reserve your stay</p>
+      <h2 class="font-display text-3xl md:text-4xl font-700 mt-1">Book Direct</h2>
+      <p class="text-white/60 mt-2">Best rate guaranteed — you save the OTA commission when you book here.</p>
+    </div>
+    <form id="bookingForm" class="bg-white/5 border border-white/10 rounded-2xl p-6 grid md:grid-cols-2 gap-4">
+      <label class="text-sm">Booking type
+        <select name="kind" class="mt-1 w-full rounded-lg bg-white/10 border border-white/15 px-3 py-2.5 outline-none focus:ring-2 focus:ring-saffron">
+          <option value="room">Room stay</option>
+          <option value="banquet">Banquet / Event</option>
+        </select>
+      </label>
+      <label class="text-sm" data-room>Room type
+        <select name="roomType" class="mt-1 w-full rounded-lg bg-white/10 border border-white/15 px-3 py-2.5 outline-none focus:ring-2 focus:ring-saffron"></select>
+      </label>
+      <label class="text-sm" data-banquet style="display:none">Banquet hall
+        <select name="banquetId" class="mt-1 w-full rounded-lg bg-white/10 border border-white/15 px-3 py-2.5 outline-none focus:ring-2 focus:ring-saffron"></select>
+      </label>
+      <label class="text-sm">Check-in
+        <input type="date" name="checkIn" required class="mt-1 w-full rounded-lg bg-white/10 border border-white/15 px-3 py-2.5 outline-none focus:ring-2 focus:ring-saffron" />
+      </label>
+      <label class="text-sm" data-room>Check-out
+        <input type="date" name="checkOut" class="mt-1 w-full rounded-lg bg-white/10 border border-white/15 px-3 py-2.5 outline-none focus:ring-2 focus:ring-saffron" />
+      </label>
+      <label class="text-sm">Guests
+        <input type="number" name="guests" min="1" value="2" class="mt-1 w-full rounded-lg bg-white/10 border border-white/15 px-3 py-2.5 outline-none focus:ring-2 focus:ring-saffron" />
+      </label>
+      <label class="text-sm">Booking source
+        <select name="channel" class="mt-1 w-full rounded-lg bg-white/10 border border-white/15 px-3 py-2.5 outline-none focus:ring-2 focus:ring-saffron"></select>
+      </label>
+      <label class="text-sm">Full name
+        <input name="guestName" required class="mt-1 w-full rounded-lg bg-white/10 border border-white/15 px-3 py-2.5 outline-none focus:ring-2 focus:ring-saffron" />
+      </label>
+      <label class="text-sm">Email
+        <input type="email" name="guestEmail" class="mt-1 w-full rounded-lg bg-white/10 border border-white/15 px-3 py-2.5 outline-none focus:ring-2 focus:ring-saffron" />
+      </label>
+      <label class="text-sm">Phone
+        <input name="guestPhone" class="mt-1 w-full rounded-lg bg-white/10 border border-white/15 px-3 py-2.5 outline-none focus:ring-2 focus:ring-saffron" />
+      </label>
+      <div class="md:col-span-2 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-4 mt-1">
+        <div id="quote" class="text-sm text-white/70">Select dates to see your total.</div>
+        <button class="rounded-full bg-saffron px-8 py-3 font-600 hover:bg-white hover:text-ink transition">Confirm Booking</button>
+      </div>
+    </form>
+    <p id="bookMsg" class="text-center mt-4 text-sm"></p>
+  </div>
+</section>
+
+<!-- Partners / OTA -->
+<section id="partners" class="max-w-7xl mx-auto px-4 py-16 text-center">
+  <p class="text-gold uppercase tracking-[0.2em] text-xs font-600">Also available on</p>
+  <h2 class="font-display text-3xl md:text-4xl font-700 mt-1 mb-3">Find us on your favourite travel site</h2>
+  <p class="text-black/55 max-w-2xl mx-auto mb-8">We list our rooms across leading Online Travel Agencies. Rates &amp; availability stay in sync — but you always get our best price by booking direct.</p>
+  <div id="partnerStrip" class="flex flex-wrap items-center justify-center gap-4"></div>
+</section>
+
+<!-- Gallery -->
+<section class="max-w-7xl mx-auto px-4 pb-16">
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+    <img class="rounded-xl object-cover h-40 w-full" src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=600&q=60" alt="" />
+    <img class="rounded-xl object-cover h-40 w-full" src="https://images.unsplash.com/photo-1445019980597-93fa8acb246c?auto=format&fit=crop&w=600&q=60" alt="" />
+    <img class="rounded-xl object-cover h-40 w-full" src="https://images.unsplash.com/photo-1540304453527-62f979142a17?auto=format&fit=crop&w=600&q=60" alt="" />
+    <img class="rounded-xl object-cover h-40 w-full" src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=600&q=60" alt="" />
   </div>
 </section>
 
 <!-- Contact -->
-<section id="contact" class="bg-gradient-to-b from-white to-slate-50 border-t border-slate-100">
-  <div class="max-w-7xl mx-auto px-4 py-20 grid lg:grid-cols-3 gap-6">
-    <div class="lg:col-span-1 p-6 rounded-3xl bg-navy text-white shadow-soft">
-      <div class="text-xs uppercase tracking-widest text-saffron font-bold">Reach us</div>
-      <div class="text-2xl font-extrabold mt-2">Camp Office</div>
-      <div class="mt-4 space-y-3 text-sm">
-        <div class="flex items-start gap-3"><span>📍</span><span>MLA Camp Office, Station Road,<br/>Jhanjharpur, Madhubani – 847404, Bihar</span></div>
-        <div class="flex items-start gap-3"><span>📞</span><span>Toll-free: 1800-345-6789<br/>Office: +91-6273-2XX-XXX</span></div>
-        <div class="flex items-start gap-3"><span>✉️</span><span>contact@jhanjharpur.co.in<br/>grievance@jhanjharpur.co.in</span></div>
-        <div class="flex items-start gap-3"><span>🕒</span><span>Mon – Sat · 10:00 AM – 6:00 PM</span></div>
-      </div>
-      <div class="mt-6 flex items-center gap-2">
-        <a class="w-9 h-9 rounded-lg bg-white/10 hover:bg-white/20 grid place-items-center" aria-label="Facebook">f</a>
-        <a class="w-9 h-9 rounded-lg bg-white/10 hover:bg-white/20 grid place-items-center" aria-label="X">𝕏</a>
-        <a class="w-9 h-9 rounded-lg bg-white/10 hover:bg-white/20 grid place-items-center" aria-label="YouTube">▶</a>
-        <a class="w-9 h-9 rounded-lg bg-white/10 hover:bg-white/20 grid place-items-center" aria-label="Instagram">◎</a>
-      </div>
+<section id="contact" class="bg-white/60 border-t border-black/5">
+  <div class="max-w-7xl mx-auto px-4 py-16 grid md:grid-cols-2 gap-8">
+    <div>
+      <p class="text-gold uppercase tracking-[0.2em] text-xs font-600">Reach us</p>
+      <h2 class="font-display text-3xl md:text-4xl font-700 mt-1 mb-6">Namaste Bharat Inn</h2>
+      <ul class="space-y-3 text-black/70">
+        <li>📍 12 Heritage Road, City Centre, India</li>
+        <li>📞 <a class="hover:text-saffron" href="tel:+919000000000">+91 90000 00000</a></li>
+        <li>✉️ <a class="hover:text-saffron" href="mailto:stay@namastebharatinn.com">stay@namastebharatinn.com</a></li>
+        <li>🕐 Reception open 24×7</li>
+      </ul>
+      <a href="#book" class="inline-block mt-6 rounded-full bg-ink text-white px-6 py-3 font-600 hover:bg-saffron transition">Book a Room</a>
     </div>
-    <div class="lg:col-span-2 rounded-3xl overflow-hidden border border-slate-200 shadow-soft min-h-[360px] relative bg-slate-100">
-      <iframe title="Jhanjharpur Map" class="w-full h-full min-h-[360px] border-0" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.openstreetmap.org/export/embed.html?bbox=86.20%2C26.20%2C86.40%2C26.35&layer=mapnik&marker=26.265%2C86.296"></iframe>
-    </div>
+    <iframe class="w-full h-72 rounded-2xl border border-black/10" loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=77.20%2C28.60%2C77.25%2C28.64&layer=mapnik"></iframe>
   </div>
 </section>
 
-<!-- Footer -->
-<footer class="bg-ink text-slate-300">
-  <div class="max-w-7xl mx-auto px-4 py-14 grid md:grid-cols-4 gap-8">
-    <div>
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-saffron via-white to-india"></div>
-        <div class="leading-tight"><div class="font-extrabold text-white">Jhanjharpur</div><div class="text-xs uppercase tracking-widest text-slate-400">Vidhan Sabha</div></div>
-      </div>
-      <p class="mt-4 text-sm">Official portal of the Jhanjharpur Vidhan Sabha constituency, working towards a transparent and accountable government.</p>
+<footer class="bg-ink text-cream/70">
+  <div class="max-w-7xl mx-auto px-4 py-10 flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
+    <div class="flex items-center gap-3">
+      <span class="w-9 h-9 rounded-lg bg-saffron text-white grid place-items-center font-hindi text-xl">न</span>
+      <span>© <span id="year"></span> Namaste Bharat Inn · Hotel &amp; Banquets</span>
     </div>
-    <div>
-      <div class="text-white font-semibold mb-3">Explore</div>
-      <ul class="space-y-2 text-sm">
-        <li><a href="#dashboard" class="hover:text-white">Dashboard</a></li>
-        <li><a href="#development" class="hover:text-white">Projects</a></li>
-        <li><a href="#schemes" class="hover:text-white">Schemes</a></li>
-        <li><a href="#news" class="hover:text-white">News</a></li>
-      </ul>
-    </div>
-    <div>
-      <div class="text-white font-semibold mb-3">Citizen Services</div>
-      <ul class="space-y-2 text-sm">
-        <li><a href="#grievance" class="hover:text-white">File Grievance</a></li>
-        <li><a href="#janta" class="hover:text-white">Janta Darbar</a></li>
-        <li><a class="hover:text-white">RTI</a></li>
-        <li><a class="hover:text-white">Tenders</a></li>
-      </ul>
-    </div>
-    <div>
-      <div class="text-white font-semibold mb-3">Newsletter</div>
-      <p class="text-sm">Get monthly progress updates straight to your inbox.</p>
-      <form class="mt-3 flex gap-2">
-        <input class="flex-1 px-3 py-2.5 rounded-lg bg-white/10 border border-white/10 text-sm placeholder:text-slate-400 focus:outline-none focus:border-saffron" placeholder="you@example.com"/>
-        <button type="button" class="px-4 py-2.5 rounded-lg bg-saffron text-ink text-sm font-semibold">Subscribe</button>
-      </form>
-    </div>
-  </div>
-  <div class="border-t border-white/10">
-    <div class="max-w-7xl mx-auto px-4 py-5 flex flex-wrap items-center justify-between gap-2 text-xs">
-      <div>© 2026 Jhanjharpur Vidhan Sabha · All rights reserved.</div>
-      <div class="flex gap-4 text-slate-400"><a class="hover:text-white">Privacy</a><a class="hover:text-white">Terms</a><a class="hover:text-white">Accessibility</a><a class="hover:text-white">Sitemap</a></div>
+    <div class="flex items-center gap-5">
+      <a href="admin.html" class="hover:text-saffron">Revenue Dashboard</a>
+      <a href="#rooms" class="hover:text-saffron">Rooms</a>
+      <a href="#book" class="hover:text-saffron">Book</a>
     </div>
   </div>
 </footer>
 
-<script src="assets/main.js"></script>
+<div id="modeBadge" class="fixed bottom-4 left-4 z-50 text-[11px] px-3 py-1.5 rounded-full bg-ink/90 text-white shadow-soft"></div>
+
+<script src="assets/catalog.js"></script>
+<script src="assets/api.js"></script>
+<script src="assets/app.js"></script>
 </body>
 </html>
