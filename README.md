@@ -3,6 +3,13 @@
 A modern, single-page redesign of `jhanjharpur.co.in` built around the
 Jhanjharpur Vidhan Sabha constituency (Madhubani, Bihar).
 
+## IVCS Manager Survey
+
+A mobile-first survey web app to record IVCS Manager details lives in
+[`survey/`](survey/) — once GitHub Pages is enabled it is served at
+`/survey/`. See [`survey/README.md`](survey/README.md) for setup and the
+Google Sheets backend. Demo login: `admin` / `ivcs@2026`.
+
 ## Run
 
 No build step — just open `index.html` in any browser, or serve the
