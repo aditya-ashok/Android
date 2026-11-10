@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Console — Namaste Bharat Inn</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23ff7a18'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='white' font-family='serif'%3E%E0%A4%A8%3C/text%3E%3C/svg%3E" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css" />
+<script>
+  tailwind.config = { theme: { extend: {
+    fontFamily: { sans: ['"Plus Jakarta Sans"','system-ui'], display: ['"Fraunces"','serif'] },
+    colors: { saffron:'#ff7a18', gold:'#c8912f', leaf:'#0f8a5f', ink:'#1a1206', cream:'#fbf7ef' },
+    boxShadow: { soft:'0 12px 34px -14px rgba(26,18,6,0.28)' },
+  }}}
+</script>
+</head>
+<body class="font-sans bg-cream text-ink antialiased">
+
+<header class="bg-ink text-white sticky top-0 z-40">
+  <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <span class="w-9 h-9 rounded-lg bg-saffron grid place-items-center font-display text-lg">न</span>
+      <span class="font-display text-lg font-700 hidden sm:inline">Namaste Bharat Inn</span>
+      <span class="text-xs uppercase tracking-widest text-white/50 hidden md:inline">Console</span>
+    </div>
+    <nav id="tabs" class="flex items-center gap-1 text-sm overflow-x-auto thin-scroll"></nav>
+    <div class="flex items-center gap-3 shrink-0">
+      <span id="whoami" class="text-sm text-white/70 hidden sm:inline"></span>
+      <button id="logout" class="text-sm rounded-full bg-white/10 hover:bg-white/20 px-4 py-1.5">Logout</button>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 py-6">
+  <div id="view"><p class="text-black/50">Loading…</p></div>
+</main>
+
+<div id="toast" class="fixed bottom-4 right-4 z-50 hidden px-4 py-2.5 rounded-lg shadow-soft text-sm"></div>
+
+<script src="assets/catalog.js"></script>
+<script src="assets/manage.js"></script>
+</body>
+</html>

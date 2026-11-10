@@ -182,14 +182,20 @@
     return d.toISOString().slice(0, 10);
   }
 
-  // Generate ~`days` days of realistic bookings ending "today".
+  // Generate `days` days of realistic bookings ending "today" (plus a few
+  // upcoming reservations). Each room gets its OWN non-overlapping timeline,
+  // so daily occupancy can never exceed 100%.
   function generateBookings(days, todayStr) {
     const rnd = mulberry32(20260703);
     const today = todayStr ? new Date(todayStr + "T00:00:00") : new Date();
+    const start = new Date(today);
+    start.setDate(today.getDate() - (days - 1));
+    const horizon = new Date(today);
+    horizon.setDate(today.getDate() + 7); // some future reservations
     const bookings = [];
     let ref = 1001;
-    const roomChannels = ["direct", "walkin", "makemytrip", "yatra", "goibibo", "booking"];
-    // weight channels so OTAs dominate but direct is healthy
+    const addDays = (d, n) => { const x = new Date(d); x.setDate(d.getDate() + n); return x; };
+    // weight channels so OTAs dominate but direct stays healthy
     const weighted = [
       "direct", "direct", "direct",
       "makemytrip", "makemytrip", "makemytrip",
@@ -199,87 +205,92 @@
       "walkin",
     ];
 
-    for (let d = days - 1; d >= 0; d--) {
-      const day = new Date(today);
-      day.setDate(today.getDate() - d);
-      // 3–9 room bookings that are "in house" this night
-      const n = 3 + Math.floor(rnd() * 7);
-      const used = new Set();
-      for (let i = 0; i < n; i++) {
-        let room = ROOMS[Math.floor(rnd() * ROOMS.length)];
-        let guard = 0;
-        while (used.has(room.id) && guard++ < 20) {
-          room = ROOMS[Math.floor(rnd() * ROOMS.length)];
+    // --- per-room timeline: stay, gap, stay, ... (no overlaps) ---
+    ROOMS.forEach((room) => {
+      let cursor = new Date(start);
+      while (cursor <= horizon) {
+        if (rnd() < 0.62) {
+          const nights = 1 + Math.floor(rnd() * 4);
+          const ci = new Date(cursor);
+          const co = addDays(ci, nights);
+          const ch = weighted[Math.floor(rnd() * weighted.length)];
+          const rate = Math.round(room.price * (0.92 + rnd() * 0.22));
+          const gross = rate * nights;
+          const m = computeMoney(ch, gross);
+          const future = ci > today;
+          bookings.push({
+            ref: "NBI-" + ref++,
+            kind: "room",
+            itemId: room.id,
+            itemName: room.name,
+            roomType: room.type,
+            guestName: NAMES[Math.floor(rnd() * NAMES.length)],
+            guestEmail: "guest@example.com",
+            guestPhone: "+91 9" + Math.floor(100000000 + rnd() * 899999999),
+            checkIn: fmtDate(ci),
+            checkOut: fmtDate(co),
+            nights,
+            guests: 1 + Math.floor(rnd() * room.capacity),
+            channel: ch,
+            rate,
+            gross: m.gross,
+            commissionPct: m.commissionPct,
+            commission: m.commission,
+            net: m.net,
+            status: future ? "confirmed" : "checked_out",
+            paymentStatus: "paid",
+            paymentMethod: payMethod(ch),
+            paymentId: "pay_" + Math.floor(rnd() * 1e12).toString(36),
+            createdAt: fmtDate(addDays(ci, -(1 + Math.floor(rnd() * 20)))),
+          });
+          cursor = addDays(co, Math.floor(rnd() * 3)); // vacancy gap after checkout
+        } else {
+          cursor = addDays(cursor, 1);
         }
-        used.add(room.id);
-        const nights = 1 + Math.floor(rnd() * 3);
-        const ci = new Date(day);
-        const co = new Date(day);
-        co.setDate(day.getDate() + nights);
-        const ch = weighted[Math.floor(rnd() * weighted.length)];
-        // small rate variance
-        const rate = Math.round(room.price * (0.92 + rnd() * 0.22));
-        const gross = rate * nights;
-        const money = computeMoney(ch, gross);
-        bookings.push({
-          ref: "NBI-" + ref++,
-          kind: "room",
-          itemId: room.id,
-          itemName: room.name,
-          roomType: room.type,
-          guestName: NAMES[Math.floor(rnd() * NAMES.length)],
-          guestEmail: "guest@example.com",
-          guestPhone: "+91 9" + Math.floor(100000000 + rnd() * 899999999),
-          checkIn: fmtDate(ci),
-          checkOut: fmtDate(co),
-          nights,
-          guests: 1 + Math.floor(rnd() * room.capacity),
-          channel: ch,
-          rate,
-          gross: money.gross,
-          commissionPct: money.commissionPct,
-          commission: money.commission,
-          net: money.net,
-          status: "confirmed",
-          paymentStatus: "paid",
-          paymentMethod: payMethod(ch),
-          paymentId: "pay_" + Math.floor(rnd() * 1e12).toString(36),
-          createdAt: fmtDate(day),
-        });
       }
-      // occasional banquet booking (~20% of days)
-      if (rnd() < 0.2) {
-        const b = BANQUETS[Math.floor(rnd() * BANQUETS.length)];
-        const ch = rnd() < 0.7 ? "direct" : "makemytrip";
-        const gross = b.price;
-        const money = computeMoney(ch, gross);
-        bookings.push({
-          ref: "NBI-" + ref++,
-          kind: "banquet",
-          itemId: b.id,
-          itemName: b.name,
-          roomType: "Banquet",
-          guestName: NAMES[Math.floor(rnd() * NAMES.length)],
-          guestEmail: "events@example.com",
-          guestPhone: "+91 9" + Math.floor(100000000 + rnd() * 899999999),
-          checkIn: fmtDate(day),
-          checkOut: fmtDate(day),
-          nights: 1,
-          guests: 50 + Math.floor(rnd() * b.capacity),
-          channel: ch,
-          rate: gross,
-          gross: money.gross,
-          commissionPct: money.commissionPct,
-          commission: money.commission,
-          net: money.net,
-          status: "confirmed",
-          paymentStatus: "paid",
-          paymentMethod: payMethod(ch),
-          paymentId: "pay_" + Math.floor(rnd() * 1e12).toString(36),
-          createdAt: fmtDate(day),
-        });
+    });
+
+    // --- per-hall banquet events (rare, one hall per day at most) ---
+    BANQUETS.forEach((b) => {
+      let cursor = new Date(start);
+      while (cursor <= horizon) {
+        if (rnd() < 0.12) {
+          const ch = rnd() < 0.7 ? "direct" : "makemytrip";
+          const gross = b.price;
+          const m = computeMoney(ch, gross);
+          const future = cursor > today;
+          bookings.push({
+            ref: "NBI-" + ref++,
+            kind: "banquet",
+            itemId: b.id,
+            itemName: b.name,
+            roomType: "Banquet",
+            guestName: NAMES[Math.floor(rnd() * NAMES.length)],
+            guestEmail: "events@example.com",
+            guestPhone: "+91 9" + Math.floor(100000000 + rnd() * 899999999),
+            checkIn: fmtDate(cursor),
+            checkOut: fmtDate(cursor),
+            nights: 1,
+            guests: 50 + Math.floor(rnd() * (b.capacity - 50)),
+            channel: ch,
+            rate: gross,
+            gross: m.gross,
+            commissionPct: m.commissionPct,
+            commission: m.commission,
+            net: m.net,
+            status: future ? "confirmed" : "checked_out",
+            paymentStatus: "paid",
+            paymentMethod: payMethod(ch),
+            paymentId: "pay_" + Math.floor(rnd() * 1e12).toString(36),
+            createdAt: fmtDate(addDays(cursor, -(2 + Math.floor(rnd() * 20)))),
+          });
+          cursor = addDays(cursor, 1 + Math.floor(rnd() * 4));
+        } else {
+          cursor = addDays(cursor, 1);
+        }
       }
-    }
+    });
+
     return bookings;
   }
 

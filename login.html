@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Staff Login — Namaste Bharat Inn</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23ff7a18'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='white' font-family='serif'%3E%E0%A4%A8%3C/text%3E%3C/svg%3E" />
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+  tailwind.config = { theme: { extend: {
+    fontFamily: { sans: ['"Plus Jakarta Sans"','system-ui'], display: ['"Fraunces"','serif'] },
+    colors: { saffron:'#ff7a18', gold:'#c8912f', ink:'#1a1206', cream:'#fbf7ef' },
+  }}}
+</script>
+</head>
+<body class="font-sans bg-ink text-white min-h-screen grid place-items-center p-4">
+  <div class="w-full max-w-sm">
+    <div class="text-center mb-8">
+      <div class="w-14 h-14 rounded-2xl bg-saffron grid place-items-center font-display text-3xl mx-auto mb-3">न</div>
+      <h1 class="font-display text-2xl font-700">Namaste Bharat Inn</h1>
+      <p class="text-white/50 text-sm">Owner &amp; Manager Console</p>
+    </div>
+    <form id="loginForm" class="bg-white/5 border border-white/10 rounded-2xl p-6 space-y-4">
+      <label class="block text-sm">Username
+        <input name="username" autocomplete="username" required class="mt-1 w-full rounded-lg bg-white/10 border border-white/15 px-3 py-2.5 outline-none focus:ring-2 focus:ring-saffron" />
+      </label>
+      <label class="block text-sm">Password
+        <input name="password" type="password" autocomplete="current-password" required class="mt-1 w-full rounded-lg bg-white/10 border border-white/15 px-3 py-2.5 outline-none focus:ring-2 focus:ring-saffron" />
+      </label>
+      <button class="w-full rounded-lg bg-saffron text-ink font-700 px-4 py-2.5 hover:bg-white transition">Sign in</button>
+      <p id="msg" class="text-sm text-red-300 text-center min-h-[1.25rem]"></p>
+    </form>
+    <p class="text-center text-white/40 text-xs mt-4">Default demo logins: <b>owner / owner123</b> · <b>manager / manager123</b><br>(change these in Settings after first sign-in)</p>
+    <p class="text-center mt-4"><a href="index.html" class="text-white/60 text-sm hover:text-saffron">← Back to website</a></p>
+  </div>
+<script>
+  document.getElementById("loginForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const msg = document.getElementById("msg");
+    msg.textContent = "Signing in…"; msg.className = "text-sm text-white/50 text-center min-h-[1.25rem]";
+    const d = Object.fromEntries(new FormData(e.target).entries());
+    try {
+      const r = await fetch("/api/auth/login", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(d), credentials: "include",
+      });
+      const body = await r.json();
+      if (!r.ok) throw new Error(body.error || "Login failed");
+      location.href = "manage.html";
+    } catch (err) {
+      msg.textContent = "⚠️ " + err.message; msg.className = "text-sm text-red-300 text-center min-h-[1.25rem]";
+    }
+  });
+</script>
+</body>
+</html>

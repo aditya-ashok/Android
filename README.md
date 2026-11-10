@@ -1,92 +1,127 @@
-# Namaste Bharat Inn — Hotel Booking Site + Revenue Dashboard
+# Namaste Bharat Inn — Hotel Booking + Owner/Manager Console
 
-A full-stack website for **Namaste Bharat Inn** — a boutique hotel with
-**12 rooms** and **2 banquet halls**. It includes a guest-facing booking
-site, a booking engine, and an **admin revenue dashboard** that computes
-**daily revenue, occupancy and per-channel (OTA) performance**.
+A full-stack website and property-management system for **Namaste Bharat
+Inn** — **12 rooms**, **2 banquet halls** (Anga Hall · Magadha Hall).
+Guest-facing booking site with **Razorpay** payments, plus a
+login-protected **Owner/Manager console** backed by a database.
 
-> **OTA note:** MakeMyTrip, Yatra, Goibibo and Booking.com channels are
-> **simulated** here (bookings are tagged by source and commission is
-> deducted per channel). Real, live OTA sync requires signed contracts
-> with each OTA plus a paid **channel manager** (STAAH, eZee, Djubo,
-> etc.). The data model and revenue maths are already OTA-shaped, so a
-> real channel-manager feed can be dropped in later without redesign.
+---
 
-## What's inside
+## Features
 
-| Page | File | Purpose |
-|------|------|---------|
-| **Website** | `index.html` | Hero, rooms (4 types / 12 keys), banquets, amenities, gallery, contact + **direct booking form** with live price/commission quote. |
-| **Revenue Console** | `admin.html` | Daily **Gross / Net / Commission**, **Occupancy**, **ADR**, **RevPAR**, room vs banquet split, 14-day trend, channel doughnut, occupancy bars, channel table and in-house booking list. |
+### Guest website (`index.html`)
+Rooms, banquets, amenities, gallery, contact, and a **direct booking
+form** with a live price/commission quote and **Razorpay** checkout
+(Pay → Confirm). OTA channels (MakeMyTrip, Yatra, Goibibo, Booking.com)
+are simulated and commission-tagged.
 
-### The 12 rooms & 2 banquets
-- **Deluxe Room** ×4 — ₹3,500/night
-- **Executive Room** ×4 — ₹4,800/night
-- **Family Room** ×2 — ₹6,000/night
-- **Premium Suite** ×2 — ₹7,500/night
-- **Ganga Grand Ballroom** — up to 300 guests, ₹75,000/day
-- **Yamuna Conference Hall** — up to 150 guests, ₹40,000/day
+### Owner / Manager console (`login.html` → `manage.html`)
+Role-based login. **Owner** = everything incl. finances, rates & staff.
+**Manager** = day-to-day operations (rates read-only, no staff admin).
 
-### Distribution channels & commission
-Direct 0% · Walk-in 0% · MakeMyTrip 18% · Yatra 16% · Goibibo 18% · Booking.com 15%
+| Module | Owner | Manager |
+|--------|:-----:|:-------:|
+| **Reports** — daily gross/net/commission, occupancy, ADR, RevPAR, 14-day trend, channel breakdown | ✅ | ✅ |
+| **Bookings** — the "all room booking info" service: search/filter all bookings, check-in, check-out, cancel | ✅ | ✅ |
+| **Housekeeping** — live status of every room (clean / occupied / dirty / maintenance) + today's guest | ✅ | ✅ |
+| **Rates & inventory** — edit room/banquet prices & per-channel commission | ✅ edit | 👁 read-only |
+| **Settings** — change password; add/manage staff accounts | ✅ full | 👁 own password |
 
-`net = gross − (gross × commission%)`. Booking direct keeps 100% of revenue.
+**Default logins** (change in Settings after first sign-in):
+`owner / owner123` · `manager / manager123`
 
-## Two ways to run
+---
 
-### 1. Full-stack (frontend + backend + database)
-Real REST API on Node/Express with a SQLite database.
+## Tech / architecture
+- **Backend** — Node.js + Express (`server/app.js`), exported so it runs
+  as a local server *and* as a Vercel serverless function.
+- **Database** — **libSQL / Turso** (SQLite-compatible). Same client and
+  SQL run locally (a file) and in production (Turso). No ORM.
+- **Auth** — scrypt password hashing + stateless HMAC-signed session
+  cookies (`server/auth.js`). No external auth service.
+- **Payments** — Razorpay Orders API + server-side HMAC signature
+  verification (`/api/payment/*`). Test Mode when no keys are set.
+- **Frontend** — vanilla JS + Tailwind (CDN) + Chart.js. `assets/catalog.js`
+  is a UMD module shared by the Node seeder and the browser.
+
+```
+index.html  login.html  manage.html        ← pages
+assets/     catalog.js api.js app.js manage.js styles.css
+server/     app.js  db.js  auth.js  seed.js  index.js
+api/        index.js                         ← Vercel entry
+vercel.json  .env.example
+```
+
+---
+
+## Run locally (file database — no setup)
 
 ```bash
 npm install
-npm run seed     # loads 12 rooms, 2 banquets, 6 channels + 45 days of sample bookings
-npm start        # → http://localhost:3000  (site)  ·  /admin.html  (dashboard)
+npm run seed        # 12 rooms, 2 halls, 6 channels, 2 users, 45 days of bookings
+npm start           # → http://localhost:3000
 ```
+- Website: http://localhost:3000/
+- Console: http://localhost:3000/login.html
 
-**API** (JSON):
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/rooms`, `/api/banquets`, `/api/channels` | Catalog |
-| GET | `/api/bookings` | Recent bookings |
-| POST | `/api/bookings` | Create a booking |
-| PATCH | `/api/bookings/:id` | Update status (`checked_in`, `checked_out`, `cancelled`) |
-| GET | `/api/dashboard?date=YYYY-MM-DD` | Full day summary (revenue, occupancy, channels) |
-| GET | `/api/revenue/range?from=&to=` | Daily revenue/occupancy series |
+### Key API endpoints
+| | Endpoint | Access |
+|-|----------|--------|
+| Public | `GET /api/rooms` · `/api/banquets` · `/api/channels` | open |
+| Public | `POST /api/bookings` · `GET/POST /api/payment/*` | open |
+| Auth | `POST /api/auth/login` · `/logout` · `GET /api/auth/me` | — |
+| Auth | `GET /api/bookings` (filters: `q,status,channel,kind,from,to`) · `PATCH /api/bookings/:id` | owner+manager |
+| Auth | `GET /api/housekeeping` · `PATCH /api/rooms/:id/status` | owner+manager |
+| Auth | `GET /api/dashboard?date=` · `GET /api/revenue/range?from=&to=` | owner+manager |
+| Owner | `PATCH /api/rooms/:id/rate` · `/api/banquets/:id/rate` · `/api/channels/:id` | owner |
+| Owner | `GET/POST /api/users` · `PATCH /api/users/password` | owner |
 
-### 2. Static / demo (no backend)
-The front-end detects when the API is unreachable and falls back to an
-in-browser store (localStorage) seeded from the same catalog — so the
-site and dashboard work when hosted on **GitHub Pages**:
+---
 
+## Deploy to Vercel (+ Turso + thenamastebharat.in)
+
+Vercel is serverless, so the file DB won't persist — use **Turso** (free).
+
+**1. Create the database**
 ```bash
-python3 -m http.server 8080   # → http://localhost:8080
+# install the Turso CLI, then:
+turso db create namaste-bharat
+turso db show namaste-bharat --url          # → TURSO_DATABASE_URL (libsql://…)
+turso db tokens create namaste-bharat       # → TURSO_AUTH_TOKEN
 ```
 
-A badge in the corner shows which mode is active
-(*Live backend connected* vs *Demo mode*).
+**2. Seed it once (from your machine)**
+```bash
+TURSO_DATABASE_URL=libsql://… TURSO_AUTH_TOKEN=… npm run seed
+```
+(The app also auto-creates the two logins + catalog on first run if the
+DB is empty; `npm run seed` additionally loads sample bookings.)
 
-## Deploying
+**3. Deploy**
+- Import the GitHub repo at vercel.com (framework preset: **Other**).
+- Add Environment Variables (Settings → Environment Variables):
+  `TURSO_DATABASE_URL`, `TURSO_AUTH_TOKEN`, `AUTH_SECRET` (long random),
+  and optionally `RAZORPAY_KEY_ID` / `RAZORPAY_KEY_SECRET`.
+- Deploy. `vercel.json` routes `/api/*` to the Express function and
+  serves the static pages from Vercel's CDN.
 
-- **GitHub Pages** (already configured in `.github/workflows/pages.yml`)
-  serves the static demo automatically on push to `main`.
-- **Full-stack** — deploy to any Node host (Render, Railway, a VPS):
-  `npm install && npm run seed && npm start`. Set `PORT` via env var.
+**4. Point the domain**
+- Vercel → Project → **Settings → Domains → Add** `thenamastebharat.in`
+  (and `www.thenamastebharat.in`).
+- At your domain registrar, add the records **exactly as Vercel shows them**.
+  Typically:
+  - Apex `thenamastebharat.in` → **A** record → `76.76.21.21`
+  - `www` → **CNAME** → `cname.vercel-dns.com`
+- DNS can take a few minutes to a few hours; Vercel issues HTTPS automatically.
 
-## Stack
-- **Backend** — Node.js, Express, better-sqlite3
-- **Frontend** — vanilla JS, Tailwind (CDN), Chart.js
-- **Shared** — `assets/catalog.js` is a UMD module used by *both* the
-  Node seeder and the browser, so rooms, channels and revenue maths have
-  a single source of truth.
+> Static-only hosting (e.g. GitHub Pages) can still serve the **public
+> website** in demo mode, but the login-protected console needs this
+> Node/Vercel backend + Turso.
 
-## Customising
-- Rooms, banquets, channels, prices & commission → `assets/catalog.js`
-- Hotel name, contact, images, copy → `index.html`
-- Re-seed the database anytime → `npm run seed`
+---
 
 ## Making OTA integration real (next phase)
-1. Sign extranet contracts with MakeMyTrip, Yatra, etc.
-2. Subscribe to a channel manager (STAAH / eZee / Djubo).
-3. Map each channel's ARI (Availability, Rates, Inventory) push/pull to
-   the `bookings` + `channels` tables — the schema already carries
-   `channel`, `commission_pct`, `commission` and `net`.
+OTA channels are simulated and commission-tagged today. For live sync:
+sign OTA extranet contracts, subscribe to a channel manager (STAAH / eZee
+/ Djubo), and map its ARI feed onto the `bookings` + `channels` tables —
+the schema already carries `channel`, `commission_pct`, `commission`, `net`.
