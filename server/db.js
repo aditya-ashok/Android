@@ -66,11 +66,25 @@ db.exec(`
     commission    INTEGER,
     net           INTEGER,
     status        TEXT DEFAULT 'confirmed',
+    payment_status TEXT DEFAULT 'unpaid',
+    payment_method TEXT,
+    payment_id    TEXT,
     created_at    TEXT
   );
 
   CREATE INDEX IF NOT EXISTS idx_bookings_checkin ON bookings(check_in);
   CREATE INDEX IF NOT EXISTS idx_bookings_channel ON bookings(channel);
 `);
+
+// Safe migration for databases created before payment columns existed.
+function ensureColumn(table, col, def) {
+  const cols = db.prepare(`PRAGMA table_info(${table})`).all();
+  if (!cols.some((c) => c.name === col)) {
+    db.exec(`ALTER TABLE ${table} ADD COLUMN ${col} ${def}`);
+  }
+}
+ensureColumn("bookings", "payment_status", "TEXT DEFAULT 'unpaid'");
+ensureColumn("bookings", "payment_method", "TEXT");
+ensureColumn("bookings", "payment_id", "TEXT");
 
 module.exports = db;

@@ -26,9 +26,11 @@ function seed() {
     VALUES (@id,@name,@commission,@color)`);
   const insBook = db.prepare(`INSERT INTO bookings
     (ref,kind,item_id,item_name,room_type,guest_name,guest_email,guest_phone,
-     check_in,check_out,nights,guests,channel,rate,gross,commission_pct,commission,net,status,created_at)
+     check_in,check_out,nights,guests,channel,rate,gross,commission_pct,commission,net,status,
+     payment_status,payment_method,payment_id,created_at)
     VALUES (@ref,@kind,@itemId,@itemName,@roomType,@guestName,@guestEmail,@guestPhone,
-     @checkIn,@checkOut,@nights,@guests,@channel,@rate,@gross,@commissionPct,@commission,@net,@status,@createdAt)`);
+     @checkIn,@checkOut,@nights,@guests,@channel,@rate,@gross,@commissionPct,@commission,@net,@status,
+     @paymentStatus,@paymentMethod,@paymentId,@createdAt)`);
 
   const load = db.transaction(() => {
     CATALOG.ROOMS.forEach((r) =>

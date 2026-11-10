@@ -133,6 +133,13 @@
     return CHANNELS.find((c) => c.id === id) || CHANNELS[0];
   }
 
+  // How a booking on this channel was paid.
+  function payMethod(channelId) {
+    if (channelId === "walkin") return "Cash at desk";
+    if (channelId === "direct") return "Razorpay";
+    return channel(channelId).name + " (collected by OTA)";
+  }
+
   // ---- Revenue maths ----------------------------------------------------
   // Given gross amount + channel, return the money split.
   function computeMoney(channelId, gross) {
@@ -234,6 +241,9 @@
           commission: money.commission,
           net: money.net,
           status: "confirmed",
+          paymentStatus: "paid",
+          paymentMethod: payMethod(ch),
+          paymentId: "pay_" + Math.floor(rnd() * 1e12).toString(36),
           createdAt: fmtDate(day),
         });
       }
@@ -263,6 +273,9 @@
           commission: money.commission,
           net: money.net,
           status: "confirmed",
+          paymentStatus: "paid",
+          paymentMethod: payMethod(ch),
+          paymentId: "pay_" + Math.floor(rnd() * 1e12).toString(36),
           createdAt: fmtDate(day),
         });
       }
@@ -279,6 +292,7 @@
     CHANNELS,
     TOTAL_ROOMS,
     channel,
+    payMethod,
     computeMoney,
     nightsBetween,
     generateBookings,

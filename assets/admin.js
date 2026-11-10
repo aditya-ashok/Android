@@ -22,6 +22,14 @@
     cancelled: "bg-red-100 text-red-700",
   };
 
+  function payBadge(b) {
+    const paid = b.paymentStatus === "paid";
+    const cls = paid ? "bg-green-100 text-green-700" : "bg-amber-100 text-amber-700";
+    const label = paid ? "Paid" : (b.paymentStatus || "unpaid");
+    const method = b.paymentMethod ? `<div class="text-[10px] text-black/40 mt-0.5">${b.paymentMethod}</div>` : "";
+    return `<span class="text-xs px-2 py-0.5 rounded-full ${cls}">${label}</span>${method}`;
+  }
+
   async function render(date) {
     const [day, series] = await Promise.all([
       window.NBI.dashboard(date),
@@ -76,11 +84,12 @@
             <td>${b.kind === "banquet" ? "—" : b.nights}</td>
             <td>${rupee(b.gross)}</td>
             <td class="text-leaf">${rupee(b.net)}</td>
+            <td>${payBadge(b)}</td>
             <td><span class="text-xs px-2 py-0.5 rounded-full ${STATUS_STYLE[b.status] || ""}">${b.status.replace("_", " ")}</span></td>
           </tr>`;
             })
             .join("")
-        : `<tr><td colspan="8" class="py-4 text-center text-black/40">No stays or events on this date.</td></tr>`;
+        : `<tr><td colspan="9" class="py-4 text-center text-black/40">No stays or events on this date.</td></tr>`;
 
     drawTrend(series);
     drawChannels(active);

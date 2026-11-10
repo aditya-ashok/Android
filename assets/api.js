@@ -132,7 +132,11 @@ window.NBI = (function () {
       nights, guests: b.guests || 1, channel: b.channel || "direct",
       rate, gross: m.gross, commissionPct: m.commissionPct,
       commission: m.commission, net: m.net,
-      status: "confirmed", createdAt: today(),
+      status: "confirmed",
+      paymentStatus: b.paymentStatus || "unpaid",
+      paymentMethod: b.paymentMethod || C.payMethod(b.channel || "direct"),
+      paymentId: b.paymentId || null,
+      createdAt: today(),
     };
     all.push(booking);
     saveLocal(all);
@@ -199,6 +203,49 @@ window.NBI = (function () {
         return r.json();
       }
       return localCreate(payload);
+    },
+
+    // ---- payments (Razorpay) ----
+    async paymentConfig() {
+      await ready;
+      if (mode === "api") {
+        try { return await get("/api/payment/config"); } catch (e) {}
+      }
+      return { enabled: false, keyId: null, currency: "INR" };
+    },
+    async createOrder(amount) {
+      await ready;
+      if (mode === "api") {
+        const r = await fetch("/api/payment/order", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ amount }),
+        });
+        if (r.ok) return r.json();
+      }
+      return {
+        id: "order_sim_" + Math.random().toString(36).slice(2, 12),
+        amount: Math.round(amount) * 100,
+        currency: "INR",
+        simulated: true,
+      };
+    },
+    async verifyPayment(resp) {
+      await ready;
+      if (mode === "api" && resp && !String(resp.razorpay_order_id || "").startsWith("order_sim_")) {
+        const r = await fetch("/api/payment/verify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(resp),
+        });
+        if (r.ok) return r.json();
+        throw new Error((await r.json()).error || "Verification failed");
+      }
+      return {
+        verified: true,
+        simulated: true,
+        paymentId: (resp && resp.razorpay_payment_id) || "pay_sim_" + Math.random().toString(36).slice(2, 12),
+      };
     },
     today,
   };

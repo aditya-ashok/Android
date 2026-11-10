@@ -2,6 +2,8 @@
 (function () {
   const C = window.CATALOG;
   const rupee = (n) => "₹" + Math.round(n).toLocaleString("en-IN");
+  let currentGross = 0;   // payable amount for the active quote
+  let currentDesc = "";   // human label for the payment
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 
@@ -156,11 +158,13 @@
         const nights = C.nightsBetween(ci, co);
         gross = rt.price * nights;
         label = `${nights} night${nights > 1 ? "s" : ""} × ${rupee(rt.price)}`;
+        currentDesc = `${rt.type} · ${nights} night${nights > 1 ? "s" : ""}`;
       }
     } else {
       const b = C.BANQUETS.find((x) => x.id === d.get("banquetId"));
-      if (b) { gross = b.price; label = "1 day event"; }
+      if (b) { gross = b.price; label = "1 day event"; currentDesc = b.name + " · event booking"; }
     }
+    currentGross = gross;
     const m = C.computeMoney(channel, gross);
     const note = m.commission
       ? ` · OTA keeps ${rupee(m.commission)} (${m.commissionPct}%), you net ${rupee(m.net)}`
@@ -173,9 +177,85 @@
   toggleKind();
   updateQuote();
 
-  // ---- submit booking ----
+  // ---- simulated Razorpay modal (Test Mode, when no live keys) ----
+  function simulateRazorpay(amount, prefill, orderId) {
+    return new Promise((resolve, reject) => {
+      const ov = document.createElement("div");
+      ov.className = "fixed inset-0 z-[60] grid place-items-center bg-black/60 p-4";
+      ov.innerHTML = `
+        <div class="bg-white text-ink rounded-2xl w-full max-w-sm overflow-hidden shadow-2xl">
+          <div class="bg-[#072654] text-white px-5 py-4 flex items-center justify-between">
+            <span class="font-700 text-lg">Razorpay</span>
+            <span class="text-[11px] bg-amber-400 text-ink px-2 py-0.5 rounded-full font-600">TEST MODE</span>
+          </div>
+          <div class="p-5 space-y-3">
+            <div class="text-sm text-black/60">Paying <b>Namaste Bharat Inn</b></div>
+            <div class="font-display text-3xl font-700">${rupee(amount)}</div>
+            <div class="text-xs text-black/50">${currentDesc || ""}</div>
+            <div class="text-xs bg-cream border border-black/10 rounded-lg p-2.5 text-black/60">
+              Order <span class="font-mono">${orderId}</span><br>
+              No real card is charged. Add live Razorpay keys on the server to take real payments.
+            </div>
+            <div class="flex gap-2 pt-1">
+              <button data-cancel class="flex-1 rounded-lg border border-black/15 px-4 py-2.5 font-600 hover:bg-black/5">Cancel</button>
+              <button data-pay class="flex-1 rounded-lg bg-[#3395ff] text-white px-4 py-2.5 font-600 hover:brightness-110">Pay ${rupee(amount)}</button>
+            </div>
+          </div>
+        </div>`;
+      document.body.appendChild(ov);
+      const close = () => ov.remove();
+      ov.querySelector("[data-pay]").addEventListener("click", () => { close(); resolve(); });
+      ov.querySelector("[data-cancel]").addEventListener("click", () => { close(); reject(new Error("Payment cancelled")); });
+      ov.addEventListener("click", (ev) => { if (ev.target === ov) { close(); reject(new Error("Payment cancelled")); } });
+    });
+  }
+
+  // ---- run the payment, resolve with {paymentId, method} ----
+  async function payForBooking(amount, prefill) {
+    const cfg = await window.NBI.paymentConfig();
+    const order = await window.NBI.createOrder(amount);
+    if (cfg.enabled && !order.simulated && window.Razorpay) {
+      return new Promise((resolve, reject) => {
+        const rzp = new window.Razorpay({
+          key: cfg.keyId,
+          order_id: order.id,
+          amount: order.amount,
+          currency: order.currency || "INR",
+          name: "Namaste Bharat Inn",
+          description: currentDesc || "Booking",
+          prefill: { name: prefill.name, email: prefill.email, contact: prefill.contact },
+          theme: { color: "#ff7a18" },
+          handler: async (resp) => {
+            try {
+              const v = await window.NBI.verifyPayment(resp);
+              resolve({ paymentId: v.paymentId, method: "Razorpay" });
+            } catch (e) { reject(e); }
+          },
+          modal: { ondismiss: () => reject(new Error("Payment cancelled")) },
+        });
+        rzp.on("payment.failed", (r) =>
+          reject(new Error((r.error && r.error.description) || "Payment failed"))
+        );
+        rzp.open();
+      });
+    }
+    // Test Mode (no live keys)
+    await simulateRazorpay(amount, prefill, order.id);
+    const v = await window.NBI.verifyPayment({ razorpay_order_id: order.id });
+    return { paymentId: v.paymentId, method: "Razorpay (Test Mode)" };
+  }
+
+  // ---- submit booking (pay first, then confirm) ----
+  const payBtn = $("#payBtn");
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
+    updateQuote();
+    const msg = $("#bookMsg");
+    if (!currentGross) {
+      msg.textContent = "⚠️ Please choose dates / a hall to see the amount first.";
+      msg.className = "text-center mt-4 text-sm text-red-300";
+      return;
+    }
     const d = Object.fromEntries(new FormData(form).entries());
     const payload = {
       kind: d.kind,
@@ -189,12 +269,22 @@
       guestEmail: d.guestEmail,
       guestPhone: d.guestPhone,
     };
-    const msg = $("#bookMsg");
-    msg.textContent = "Processing…";
+    const prefill = { name: d.guestName, email: d.guestEmail, contact: d.guestPhone };
+
+    payBtn.disabled = true;
+    payBtn.classList.add("opacity-60");
+    msg.textContent = "Opening secure payment…";
     msg.className = "text-center mt-4 text-sm text-white/70";
     try {
+      const pay = await payForBooking(currentGross, prefill);
+      payload.paymentStatus = "paid";
+      payload.paymentMethod = pay.method;
+      payload.paymentId = pay.paymentId;
       const b = await window.NBI.createBooking(payload);
-      msg.innerHTML = `✅ Confirmed! Reference <b>${b.ref}</b> — ${b.itemName}, ${rupee(b.gross)} total. A confirmation will be sent to you.`;
+      msg.innerHTML =
+        `✅ Payment successful — booking confirmed!<br>` +
+        `Ref <b>${b.ref}</b> · ${b.itemName} · <b>${rupee(b.gross)}</b> paid<br>` +
+        `<span class="text-white/60">Payment ID ${pay.paymentId} · ${pay.method}</span>`;
       msg.className = "text-center mt-4 text-sm text-green-400";
       form.reset();
       fillChannelSelect($('select[name="channel"]', form));
@@ -207,6 +297,9 @@
     } catch (err) {
       msg.textContent = "⚠️ " + err.message;
       msg.className = "text-center mt-4 text-sm text-red-300";
+    } finally {
+      payBtn.disabled = false;
+      payBtn.classList.remove("opacity-60");
     }
   });
 
