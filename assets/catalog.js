@@ -93,8 +93,8 @@
   // ---- Banquets: 2 halls ------------------------------------------------
   const BANQUETS = [
     {
-      id: "BANQ-GANGA",
-      name: "Ganga Grand Ballroom",
+      id: "BANQ-ANGA",
+      name: "Anga Hall",
       capacity: 300,
       price: 75000,
       area: "5,000 sq.ft.",
@@ -105,8 +105,8 @@
       amenities: ["Stage", "Dance Floor", "Valet Parking", "In-house Catering", "LED Wall", "AC"],
     },
     {
-      id: "BANQ-YAMUNA",
-      name: "Yamuna Conference Hall",
+      id: "BANQ-MAGADHA",
+      name: "Magadha Hall",
       capacity: 150,
       price: 40000,
       area: "2,400 sq.ft.",
