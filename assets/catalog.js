@@ -95,25 +95,25 @@
     {
       id: "BANQ-ANGA",
       name: "Anga Hall",
-      capacity: 300,
+      capacity: 500,
       price: 75000,
       area: "5,000 sq.ft.",
       image:
         "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=900&q=70",
       description:
-        "A pillarless grand ballroom for weddings and large receptions of up to 300 guests, with stage, dance floor and valet.",
+        "A pillarless grand ballroom for weddings and large receptions of up to 500 guests, with stage, dance floor and valet.",
       amenities: ["Stage", "Dance Floor", "Valet Parking", "In-house Catering", "LED Wall", "AC"],
     },
     {
       id: "BANQ-MAGADHA",
       name: "Magadha Hall",
-      capacity: 150,
+      capacity: 300,
       price: 40000,
       area: "2,400 sq.ft.",
       image:
         "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=900&q=70",
       description:
-        "A flexible hall for corporate conferences, engagements and intimate functions up to 150 guests.",
+        "A flexible hall for corporate conferences, engagements and intimate functions up to 300 guests.",
       amenities: ["Projector", "Podium", "Wi-Fi", "Catering", "AC", "Parking"],
     },
   ];
