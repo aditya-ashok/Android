@@ -13,7 +13,8 @@
     "node": ">=18"
   },
   "dependencies": {
-    "@libsql/client": "^0.18.0",
+    "@electric-sql/pglite": "^0.5.16",
+    "@neondatabase/serverless": "^1.2.0",
     "cors": "^2.8.5",
     "express": "^4.19.2"
   }

@@ -161,7 +161,7 @@ app.post("/api/bookings", async (req, res) => {
         (ref,kind,item_id,item_name,room_type,guest_name,guest_email,guest_phone,
          check_in,check_out,nights,guests,channel,rate,gross,commission_pct,commission,net,status,
          payment_status,payment_method,payment_id,created_at)
-        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,'confirmed',?,?,?,?)`,
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,'confirmed',?,?,?,?) RETURNING id`,
       args: [
         ref, kind, item.id, item.name, kind === "room" ? item.type : "Banquet",
         b.guestName || "Guest", b.guestEmail || "", b.guestPhone || "",
@@ -170,7 +170,7 @@ app.post("/api/bookings", async (req, res) => {
         b.paymentStatus || "unpaid", b.paymentMethod || CATALOG.payMethod(b.channel || "direct"), b.paymentId || null, createdAt,
       ],
     });
-    const row = (await query("SELECT * FROM bookings WHERE id = ?", [Number(r.lastInsertRowid)]))[0];
+    const row = (await query("SELECT * FROM bookings WHERE id = ?", [r.rows[0].id]))[0];
     res.status(201).json(bookingOut(row));
   } catch (err) {
     res.status(400).json({ error: err.message });
