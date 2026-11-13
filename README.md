@@ -5,6 +5,12 @@ Inn** — **12 rooms**, **2 banquet halls** (Anga Hall · Magadha Hall).
 Guest-facing booking site with **Razorpay** payments, plus a
 login-protected **Owner/Manager console** backed by a database.
 
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Faditya-ashok%2FnamastebharatInn&env=DATABASE_URL,AUTH_SECRET&envDescription=Neon%20Postgres%20connection%20string%20and%20a%20random%20auth%20secret)
+
+> One-click deploy: click the button, sign in to Vercel, and paste your
+> Neon `DATABASE_URL` + an `AUTH_SECRET` when prompted. See
+> [Deploy to Vercel](#deploy-to-vercel--neon-postgres--thenamastebharatin) below.
+
 ---
 
 ## Features
@@ -78,45 +84,39 @@ npm start           # → http://localhost:3000
 
 ---
 
-## Deploy to Vercel (+ Turso + thenamastebharat.in)
+## Deploy to Vercel (+ Neon Postgres + thenamastebharat.in)
 
-Vercel is serverless, so the file DB won't persist — use **Turso** (free).
+Vercel is serverless, so use a hosted Postgres — **Neon** (free tier).
 
 **1. Create the database**
-```bash
-# install the Turso CLI, then:
-turso db create namaste-bharat
-turso db show namaste-bharat --url          # → TURSO_DATABASE_URL (libsql://…)
-turso db tokens create namaste-bharat       # → TURSO_AUTH_TOKEN
-```
+- Sign in at [neon.tech](https://neon.tech) → **Create Project**.
+- Copy the **connection string** (`postgresql://…@…neon.tech/neondb?sslmode=require`).
+  This is your `DATABASE_URL`.
 
-**2. Seed it once (from your machine)**
-```bash
-TURSO_DATABASE_URL=libsql://… TURSO_AUTH_TOKEN=… npm run seed
-```
-(The app also auto-creates the two logins + catalog on first run if the
-DB is empty; `npm run seed` additionally loads sample bookings.)
+**2. Deploy** — click the button above, or at vercel.com → **Add New →
+Project** → import `namastebharatInn` (framework preset: **Other**).
 
-**3. Deploy**
-- Import the GitHub repo at vercel.com (framework preset: **Other**).
-- Add Environment Variables (Settings → Environment Variables):
-  `TURSO_DATABASE_URL`, `TURSO_AUTH_TOKEN`, `AUTH_SECRET` (long random),
-  and optionally `RAZORPAY_KEY_ID` / `RAZORPAY_KEY_SECRET`.
-- Deploy. `vercel.json` routes `/api/*` to the Express function and
-  serves the static pages from Vercel's CDN.
+**3. Environment Variables** (Settings → Environment Variables), then redeploy:
+| Name | Value |
+|------|-------|
+| `DATABASE_URL` | your Neon connection string |
+| `AUTH_SECRET` | any long random string |
+| `RAZORPAY_KEY_ID` / `RAZORPAY_KEY_SECRET` | *(optional — live payments)* |
+
+On first visit the app auto-creates the two logins + rooms/banquets in
+your Neon DB. For demo sample bookings in Reports, run once from your
+machine: `DATABASE_URL=postgresql://… npm run seed`.
 
 **4. Point the domain**
 - Vercel → Project → **Settings → Domains → Add** `thenamastebharat.in`
   (and `www.thenamastebharat.in`).
-- At your domain registrar, add the records **exactly as Vercel shows them**.
-  Typically:
-  - Apex `thenamastebharat.in` → **A** record → `76.76.21.21`
-  - `www` → **CNAME** → `cname.vercel-dns.com`
-- DNS can take a few minutes to a few hours; Vercel issues HTTPS automatically.
+- At your registrar, add the records **exactly as Vercel shows them**.
+  Typically: apex **A** → `76.76.21.21`, `www` **CNAME** → `cname.vercel-dns.com`.
+- Vercel issues HTTPS automatically once DNS resolves.
 
 > Static-only hosting (e.g. GitHub Pages) can still serve the **public
 > website** in demo mode, but the login-protected console needs this
-> Node/Vercel backend + Turso.
+> Node/Vercel backend + Neon.
 
 ---
 
