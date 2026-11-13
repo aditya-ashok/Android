@@ -21,6 +21,7 @@
       <h1 class="font-display text-2xl font-700">Namaste Bharat Inn</h1>
       <p class="text-white/50 text-sm">Owner &amp; Manager Console</p>
     </div>
+    <div id="dbBanner" class="hidden bg-amber-500/15 border border-amber-400/40 text-amber-200 rounded-xl p-3 text-sm mb-4"></div>
     <form id="loginForm" class="bg-white/5 border border-white/10 rounded-2xl p-6 space-y-4">
       <label class="block text-sm">Username
         <input name="username" autocomplete="username" required class="mt-1 w-full rounded-lg bg-white/10 border border-white/15 px-3 py-2.5 outline-none focus:ring-2 focus:ring-saffron" />
@@ -35,6 +36,19 @@
     <p class="text-center mt-4"><a href="index.html" class="text-white/60 text-sm hover:text-saffron">← Back to website</a></p>
   </div>
 <script>
+  // On load, check backend/database health and warn if it isn't configured.
+  (async () => {
+    try {
+      const r = await fetch("/api/status");
+      const s = await r.json();
+      if (!s.ok) {
+        const b = document.getElementById("dbBanner");
+        b.textContent = "⚠️ " + (s.message || "The backend database isn't ready yet.");
+        b.classList.remove("hidden");
+      }
+    } catch (e) { /* static hosting with no backend — ignore */ }
+  })();
+
   document.getElementById("loginForm").addEventListener("submit", async (e) => {
     e.preventDefault();
     const msg = document.getElementById("msg");
@@ -46,7 +60,7 @@
         body: JSON.stringify(d), credentials: "include",
       });
       const body = await r.json();
-      if (!r.ok) throw new Error(body.error || "Login failed");
+      if (!r.ok) throw new Error(body.message || body.error || "Login failed");
       location.href = "manage.html";
     } catch (err) {
       msg.textContent = "⚠️ " + err.message; msg.className = "text-sm text-red-300 text-center min-h-[1.25rem]";

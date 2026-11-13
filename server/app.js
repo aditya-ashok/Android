@@ -12,7 +12,7 @@ const path = require("path");
 const crypto = require("crypto");
 const express = require("express");
 const cors = require("cors");
-const { db, ensureReady } = require("./db");
+const { db, ensureReady, USE_NEON } = require("./db");
 const auth = require("./auth");
 const CATALOG = require("../assets/catalog");
 
@@ -27,13 +27,37 @@ const RZP_LIVE = Boolean(RZP_KEY_ID && RZP_KEY_SECRET);
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 
-// Ensure schema + default seed are ready before any request is handled.
-app.use(async (req, res, next) => {
+// Public health check — never throws, so it can report the DB being down.
+app.get("/api/status", async (req, res) => {
+  try {
+    await ensureReady();
+    res.json({ ok: true, db: "ok", configured: USE_NEON });
+  } catch (e) {
+    res.status(200).json({
+      ok: false,
+      db: "down",
+      configured: USE_NEON,
+      message: USE_NEON
+        ? "Could not connect to the database. Check that DATABASE_URL is correct and the database is reachable."
+        : "DATABASE_URL is not set. Add your Neon connection string in your host's environment variables (e.g. Vercel → Settings → Environment Variables), then redeploy.",
+    });
+  }
+});
+
+// Guard only the API: if the DB isn't ready, return a clear, friendly error.
+// Static pages (index/login/manage) still load so the UI can explain things.
+app.use("/api", async (req, res, next) => {
   try {
     await ensureReady();
     next();
   } catch (e) {
-    res.status(500).json({ error: "Database not ready: " + e.message });
+    res.status(503).json({
+      error: "database_unavailable",
+      configured: USE_NEON,
+      message: USE_NEON
+        ? "The database is unreachable right now. Please check DATABASE_URL and try again."
+        : "The backend database isn't configured yet. Set DATABASE_URL (your Neon connection string) in your host's environment variables, then redeploy.",
+    });
   }
 });
 
